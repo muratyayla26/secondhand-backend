@@ -1,4 +1,14 @@
 package com.yayla.secondhand.secondhandbackend.model.response;
 
-public class ProductResponse {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.yayla.secondhand.secondhandbackend.model.dto.ProductDto;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ProductResponse extends BaseResponse {
+
+    @JsonProperty("data")
+    private ProductDto productDto;
 }

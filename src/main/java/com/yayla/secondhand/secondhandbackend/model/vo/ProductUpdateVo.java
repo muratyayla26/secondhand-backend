@@ -7,11 +7,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ProductCreateVo {
+public class ProductUpdateVo {
 
+    private Long productId;
     private String title;
-
     private String description;
-
-    private Long ownerId;
+    private boolean isSold;
 }

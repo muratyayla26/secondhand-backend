@@ -1,34 +1,60 @@
 package com.yayla.secondhand.secondhandbackend.service;
 
-import com.yayla.secondhand.secondhandbackend.model.dto.ProfileProductsDto;
+import com.yayla.secondhand.secondhandbackend.convertor.product.ProductEntityToDtoConvertor;
+import com.yayla.secondhand.secondhandbackend.convertor.product.ProductVoToEntityConvertor;
+import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
+import com.yayla.secondhand.secondhandbackend.model.dto.ProductDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.Product;
+import com.yayla.secondhand.secondhandbackend.model.vo.ProductCreateVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.ProductUpdateVo;
 import com.yayla.secondhand.secondhandbackend.repository.ProductRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductService {
 
+    private final ProductRepository productRepository;
+    private final ProductVoToEntityConvertor productVoToEntityConvertor;
+    private final ProductEntityToDtoConvertor productEntityToDtoConvertor;
 
-    // repository yukarıya service entity dönüyor
-    // service yukarıya entity değil dto veya vo dönmeli
-    private ProductRepository productRepository;
-
-    public Product fetchProduct(Long productId) {
-        return productRepository.findById(productId).orElseThrow(
-                () -> new RuntimeException("not found")
-        );
+    public ProductDto fetchProduct(Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(NotFoundException::new);
+        log.info("Product fetch has ended. productId: {}", product.getProductId());
+        return productEntityToDtoConvertor.convert(product);
     }
 
+    public ProductDto createProduct(ProductCreateVo productCreateVo) {
+        log.info("Product creation has started. productCreateVo: {}", productCreateVo.toString());
+        Product product = productVoToEntityConvertor.convert(productCreateVo);
+        Product saved = productRepository.save(product);
+        log.info("Product creation has ended. saved.getProductId: {}", saved.getProductId());
+        return productEntityToDtoConvertor.convert(saved);
+    }
 
-    public ProfileProductsDto fetchProfileProducts(Long profileId) {
-       List<Product> products = productRepository.findAllByOwnerId(profileId);
-       ProfileProductsDto profileProductsDto = new ProfileProductsDto();
-       profileProductsDto.setProducts(products);
+    public ProductDto updateProduct(ProductUpdateVo productUpdateVo) {
+        log.info("Product update has started. productUpdateVo: {}", productUpdateVo.toString());
+        Product product = productRepository.findById(productUpdateVo.getProductId()).orElseThrow(NotFoundException::new);
+        updateValues(product, productUpdateVo);
+        Product saved = productRepository.save(product);
+        log.info("Product update has ended. saved.getProductId: {}", saved.getProductId());
+        return productEntityToDtoConvertor.convert(saved);
+    }
 
-       return profileProductsDto;
+    public void deleteProduct(Long productId) {
+        log.info("Product delete has started. productId: {}", productId);
+        productRepository.deleteById(productId);
+        log.info("Product delete has ended. productId: {}", productId);
+    }
+
+    private void updateValues(Product product, ProductUpdateVo productUpdateVo) {
+        Optional.of(productUpdateVo).map(ProductUpdateVo::getTitle).ifPresent(product::setTitle);
+        Optional.of(productUpdateVo).map(ProductUpdateVo::getDescription).ifPresent(product::setDescription);
+        Optional.of(productUpdateVo).map(ProductUpdateVo::isSold).ifPresent(product::setSold);
     }
 }

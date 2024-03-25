@@ -1,6 +1,5 @@
 package com.yayla.secondhand.secondhandbackend.model.request;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,13 +8,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ProductCreateRequest {
-    @NotBlank
-    private String title;
-
-    @NotBlank
-    private String description;
+public class ProductUpdateRequest {
 
     @NotNull
-    private Long ownerId;
+    private Long productId;
+    private String title;
+    private String description;
+    private boolean isSold;
 }

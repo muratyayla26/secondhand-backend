@@ -8,6 +8,6 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ProfileProductsDto {
+public class ProductsOfProfileDto {
     private List<Product> products;
 }

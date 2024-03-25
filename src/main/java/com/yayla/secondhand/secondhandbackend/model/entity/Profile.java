@@ -1,25 +1,26 @@
 package com.yayla.secondhand.secondhandbackend.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class Profile {
+@Getter
+@Setter
+@Table(name = "profile")
+public class Profile extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profile_id")
     private Long profileId;
 
+    @Column(name = "profile_name")
     private String profileName;
 
+    @Column(name = "surname")
     private String surname;
 
+    @Column(name = "email")
     private String email;
 }
