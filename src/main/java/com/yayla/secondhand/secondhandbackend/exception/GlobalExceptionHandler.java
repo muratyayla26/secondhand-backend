@@ -49,6 +49,17 @@ public class GlobalExceptionHandler {
         }
     }
 
+    @ExceptionHandler(TokenRefreshException.class)
+    public ResponseEntity<BaseResponse> handleBusinessException(TokenRefreshException exception) {
+        log.error(exception.getMessage(), exception);
+        try {
+            BaseResponse baseResponse = exceptionHelper.createErrorResponse(exception.getMessage());
+            return new ResponseEntity<>(baseResponse, HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            return exceptionHelper.getUnknownExceptionResponse(ex);
+        }
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<BaseResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.error(exception.getMessage(), exception);
