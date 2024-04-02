@@ -1,7 +1,7 @@
 package com.yayla.secondhand.secondhandbackend.service.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.yayla.secondhand.secondhandbackend.model.entity.Account;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Long accountId;
     private String username;
     private String email;
     @JsonIgnore

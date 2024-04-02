@@ -1,15 +1,17 @@
-package com.yayla.secondhand.secondhandbackend.model.request;
+package com.yayla.secondhand.secondhandbackend.model.request.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Set;
 
 @Getter
 @Setter
+@ToString
 public class SignupRequest {
     @NotBlank
     @Size(min = 3, max = 20)

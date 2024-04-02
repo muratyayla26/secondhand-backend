@@ -1,9 +1,9 @@
-package com.yayla.secondhand.secondhandbackend.model.entity;
+package com.yayla.secondhand.secondhandbackend.model.entity.auth;
 
+import com.yayla.secondhand.secondhandbackend.model.entity.BaseEntity;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 @Table(name = "account_role")
-public class AccountRole {
+public class AccountRole extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

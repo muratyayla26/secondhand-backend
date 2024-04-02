@@ -26,16 +26,16 @@ public class JwtUtils {
 
     public String generateJwtToken(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return generateTokenFromUsername(userDetails.getUsername());
+        return generateTokenFromEmail(userDetails.getEmail());
     }
 
-    public String generateTokenFromUsername(String username) {
+    public String generateTokenFromEmail(String email) {
         long jwtExpirationMsLong = Long.parseLong(jwtExpirationMs);
         Instant issuedAt = Instant.now();
         Instant expiration = issuedAt.plus(Duration.ofMillis(jwtExpirationMsLong));
 
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(Date.from(issuedAt))
                 .setExpiration(Date.from(expiration))
                 .signWith(key(), SignatureAlgorithm.HS256)
@@ -46,7 +46,7 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    public String getUsernameFromJwtToken(String token) {
+    public String getEmailFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(key()).build()
                 .parseClaimsJws(token).getBody().getSubject();
     }

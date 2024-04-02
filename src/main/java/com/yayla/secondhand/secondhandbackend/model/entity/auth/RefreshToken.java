@@ -1,4 +1,6 @@
-package com.yayla.secondhand.secondhandbackend.model.entity;
+package com.yayla.secondhand.secondhandbackend.model.entity.auth;
+
+import com.yayla.secondhand.secondhandbackend.model.entity.BaseEntity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +11,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity(name = "refresh_token")
-public class RefreshToken {
+public class RefreshToken extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "refresh_token_id")

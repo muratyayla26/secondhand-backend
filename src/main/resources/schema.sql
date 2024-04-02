@@ -27,11 +27,20 @@ CREATE TABLE IF NOT EXISTS account (
     UNIQUE (email)
 );
 
+ALTER TABLE account DROP CONSTRAINT IF EXISTS account_username_key;
+ALTER TABLE account ADD COLUMN created_at TIMESTAMP(0);
+ALTER TABLE account ADD COLUMN updated_at TIMESTAMP(0) DEFAULT NULL;
+ALTER TABLE account ALTER COLUMN created_at SET NOT NULL;
+
 CREATE TABLE IF NOT EXISTS account_role (
     role_id SERIAL PRIMARY KEY,
     role_name VARCHAR(20) NOT NULL,
     UNIQUE (role_name)
 );
+
+ALTER TABLE account_role ADD COLUMN created_at TIMESTAMP(0);
+ALTER TABLE account_role ADD COLUMN updated_at TIMESTAMP(0) DEFAULT NULL;
+ALTER TABLE account_role ALTER COLUMN created_at SET NOT NULL;
 
 CREATE TABLE IF NOT EXISTS account_account_role (
     account_id BIGINT NOT NULL,
@@ -52,3 +61,6 @@ CREATE TABLE IF NOT EXISTS refresh_token (
     account_id BIGINT NOT NULL,
     CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
+
+ALTER TABLE refresh_token ADD COLUMN created_at TIMESTAMP(0) NOT NULL;
+ALTER TABLE refresh_token ADD COLUMN updated_at TIMESTAMP(0) DEFAULT NULL;

@@ -1,7 +1,7 @@
 package com.yayla.secondhand.secondhandbackend.repository;
 
-import com.yayla.secondhand.secondhandbackend.model.entity.Account;
-import com.yayla.secondhand.secondhandbackend.model.entity.RefreshToken;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 

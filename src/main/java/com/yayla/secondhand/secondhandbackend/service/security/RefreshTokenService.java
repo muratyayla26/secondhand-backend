@@ -3,7 +3,7 @@ package com.yayla.secondhand.secondhandbackend.service.security;
 import com.yayla.secondhand.secondhandbackend.exception.TokenRefreshException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
-import com.yayla.secondhand.secondhandbackend.model.entity.RefreshToken;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import com.yayla.secondhand.secondhandbackend.repository.AccountRepository;
 import com.yayla.secondhand.secondhandbackend.repository.RefreshTokenRepository;
 

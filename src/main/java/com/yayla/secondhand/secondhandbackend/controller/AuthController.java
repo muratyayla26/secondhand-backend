@@ -1,16 +1,16 @@
 package com.yayla.secondhand.secondhandbackend.controller;
 
 import com.yayla.secondhand.secondhandbackend.exception.TokenRefreshException;
-import com.yayla.secondhand.secondhandbackend.model.entity.Account;
-import com.yayla.secondhand.secondhandbackend.model.entity.AccountRole;
-import com.yayla.secondhand.secondhandbackend.model.entity.RefreshToken;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
-import com.yayla.secondhand.secondhandbackend.model.request.LoginRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.SignupRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.TokenRefreshRequest;
-import com.yayla.secondhand.secondhandbackend.model.response.JwtResponse;
+import com.yayla.secondhand.secondhandbackend.model.request.auth.LoginRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.auth.SignupRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.auth.TokenRefreshRequest;
+import com.yayla.secondhand.secondhandbackend.model.response.auth.LoginResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.MessageResponse;
-import com.yayla.secondhand.secondhandbackend.model.response.TokenRefreshResponse;
+import com.yayla.secondhand.secondhandbackend.model.response.auth.TokenRefreshResponse;
 import com.yayla.secondhand.secondhandbackend.repository.AccountRepository;
 import com.yayla.secondhand.secondhandbackend.repository.AccountRoleRepository;
 import com.yayla.secondhand.secondhandbackend.service.security.RefreshTokenService;
@@ -57,24 +57,26 @@ public class AuthController {
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String accessToken = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getAccountId());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                refreshToken.getToken(),
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles));
+        return ResponseEntity.ok(LoginResponse.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken.getToken())
+                        .accountId(userDetails.getAccountId())
+                        .username(userDetails.getUsername())
+                        .email(userDetails.getEmail())
+                        .roles(roles)
+                        .build());
     }
 
     @PostMapping("/refreshtoken")
@@ -85,8 +87,11 @@ public class AuthController {
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getAccount)
                 .map(account -> {
-                    String token = jwtUtils.generateTokenFromUsername(account.getUsername());
-                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                    String accessToken = jwtUtils.generateTokenFromEmail(account.getEmail());
+                    return ResponseEntity.ok(TokenRefreshResponse.builder()
+                            .accessToken(accessToken)
+                            .refreshToken(requestRefreshToken)
+                            .build());
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
                         "Refresh token is not in database!"));
@@ -94,19 +99,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (accountRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
-
         if (accountRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        // Create new user's account
         Account account = new Account(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));

@@ -1,6 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.repository;
 
-import com.yayla.secondhand.secondhandbackend.model.entity.AccountRole;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
 import org.springframework.data.jpa.repository.JpaRepository;
 

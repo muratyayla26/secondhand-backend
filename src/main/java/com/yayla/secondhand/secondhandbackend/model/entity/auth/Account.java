@@ -1,14 +1,8 @@
-package com.yayla.secondhand.secondhandbackend.model.entity;
+package com.yayla.secondhand.secondhandbackend.model.entity.auth;
 
-import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
+import com.yayla.secondhand.secondhandbackend.model.entity.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,35 +10,28 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Table(name= "account",
 uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
         @UniqueConstraint(columnNames = "email")
 })
-public class Account {
+public class Account extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "account_id")
     private Long accountId;
 
-    @NotBlank
-    @Size(max = 20)
     @Column(name = "username")
     private String username;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
     @Column(name = "email")
     private String email;
 
-    @NotBlank
-    @Size(max = 120)
     @Column(name = "password")
     private String password;
 
+    // TODO account_account_role base entity extend edememis oluyor
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_account_role",
             joinColumns = @JoinColumn(name = "account_id"),
@@ -56,6 +43,5 @@ public class Account {
         this.email = email;
         this.password = password;
     }
-
 }
 
