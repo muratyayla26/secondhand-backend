@@ -1,15 +1,21 @@
 package com.yayla.secondhand.secondhandbackend.exception;
 
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +57,29 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TokenRefreshException.class)
     public ResponseEntity<BaseResponse> handleBusinessException(TokenRefreshException exception) {
+        log.error(exception.getMessage(), exception);
+        try {
+            BaseResponse baseResponse = exceptionHelper.createErrorResponse(exception.getMessage());
+            return new ResponseEntity<>(baseResponse, HttpStatus.FORBIDDEN);
+        } catch (Exception ex) {
+            return exceptionHelper.getUnknownExceptionResponse(ex);
+        }
+    }
+
+    @ExceptionHandler({BadCredentialsException.class, MalformedJwtException.class,
+            ExpiredJwtException.class, UnsupportedJwtException.class, IllegalArgumentException.class})
+    public ResponseEntity<BaseResponse> handleBadCredentialsException(Exception exception) {
+        log.error(exception.getMessage(), exception);
+        try {
+            BaseResponse baseResponse = exceptionHelper.createErrorResponse(exception.getMessage());
+            return new ResponseEntity<>(baseResponse, HttpStatus.UNAUTHORIZED);
+        } catch (Exception ex) {
+            return exceptionHelper.getUnknownExceptionResponse(ex);
+        }
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<BaseResponse> handleAccessDeniedException(AccessDeniedException exception) {
         log.error(exception.getMessage(), exception);
         try {
             BaseResponse baseResponse = exceptionHelper.createErrorResponse(exception.getMessage());

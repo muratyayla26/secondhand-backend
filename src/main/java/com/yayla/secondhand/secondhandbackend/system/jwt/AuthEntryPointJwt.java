@@ -1,6 +1,8 @@
 package com.yayla.secondhand.secondhandbackend.system.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yayla.secondhand.secondhandbackend.model.enumtype.ResponseStatusType;
+import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,24 +16,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Slf4j
 @Component
 public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.error("Unauthorized error: {}", authException.getMessage());
-        //response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-        final Map<String, Object> body = new HashMap<>();
-        body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-        body.put("error", "Unauthorized");
-        body.put("message", authException.getMessage());
-        body.put("path", request.getServletPath());
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setResponseStatusType(ResponseStatusType.FAILURE);
+        baseResponse.setErrorMessage(authException.getMessage());
 
         final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(response.getOutputStream(), body);
+        objectMapper.writeValue(response.getOutputStream(), baseResponse);
     }
 }

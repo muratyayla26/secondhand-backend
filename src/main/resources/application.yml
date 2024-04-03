@@ -19,7 +19,7 @@ server:
 yayla:
   app:
     jwtSecret: ======================BezKoder=Spring===========================
-    #jwtExpirationMs: 3600000
-    #jwtRefreshExpirationMs: 86400000
-    jwtExpirationMs: 120000
-    jwtRefreshExpirationMs: 240000
+    jwtExpirationMs: 3600000
+    jwtRefreshExpirationMs: 86400000
+    #jwtExpirationMs: 120000
+    #jwtRefreshExpirationMs: 240000

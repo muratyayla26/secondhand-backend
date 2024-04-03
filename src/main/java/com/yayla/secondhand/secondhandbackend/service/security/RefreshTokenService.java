@@ -1,7 +1,13 @@
 package com.yayla.secondhand.secondhandbackend.service.security;
 
+import com.yayla.secondhand.secondhandbackend.convertor.auth.TokenRefreshDtoToEntityConvertor;
+import com.yayla.secondhand.secondhandbackend.convertor.auth.TokenRefreshEntityToDtoConvertor;
+import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.exception.TokenRefreshException;
+import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshDto;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import com.yayla.secondhand.secondhandbackend.repository.AccountRepository;
@@ -10,26 +16,29 @@ import com.yayla.secondhand.secondhandbackend.repository.RefreshTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Ref;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class RefreshTokenService {
     @Value("${yayla.app.jwtRefreshExpirationMs}")
     private Long refreshTokenDurationMs;
 
-    @Autowired
-    private RefreshTokenRepository refreshTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final AccountRepository accountRepository;
+    private final TokenRefreshEntityToDtoConvertor tokenRefreshEntityToDtoConvertor;
+    private final TokenRefreshDtoToEntityConvertor tokenRefreshDtoToEntityConvertor;
 
-    @Autowired
-    private AccountRepository accountRepository;
-
-    public Optional<RefreshToken> findByToken(String token) {
-        return refreshTokenRepository.findByToken(token);
+    public TokenRefreshDto retrieve(String token) {
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(NotFoundException::new);
+        return tokenRefreshEntityToDtoConvertor.convert(refreshToken);
     }
 
-    public RefreshToken createRefreshToken(Long accountId) {
+    public TokenRefreshDto createRefreshToken(Long accountId) {
         RefreshToken refreshToken = new RefreshToken();
 
         refreshToken.setAccount(accountRepository.findById(accountId).get());
@@ -37,16 +46,17 @@ public class RefreshTokenService {
         refreshToken.setToken(UUID.randomUUID().toString());
 
         refreshToken = refreshTokenRepository.save(refreshToken);
-        return refreshToken;
+        return tokenRefreshEntityToDtoConvertor.convert(refreshToken);
     }
 
-    public RefreshToken verifyExpiration(RefreshToken token) {
-        if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
-            refreshTokenRepository.delete(token);
-            throw new TokenRefreshException(token.getToken(), "Refresh token was expired. Please make a new signin request");
+    public TokenRefreshDto verifyExpiration(TokenRefreshDto tokenRefreshDto) {
+        if (tokenRefreshDto.getExpiryDate().compareTo(Instant.now()) < 0) {
+            RefreshToken refreshToken = tokenRefreshDtoToEntityConvertor.convert(tokenRefreshDto);
+            refreshTokenRepository.delete(refreshToken);
+            throw new TokenRefreshException(refreshToken.getToken(), "Refresh token was expired. Please make a new signin request");
         }
 
-        return token;
+        return tokenRefreshDto;
     }
 
     @Transactional

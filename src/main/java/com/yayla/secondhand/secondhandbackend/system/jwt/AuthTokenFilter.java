@@ -40,6 +40,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch(Exception e) {
+            // TODO BURDA OLABILIR EXCEPTION 401 COZUMU
+            // https://stackoverflow.com/questions/48584175/controlleradvice-doesnt-handle-exceptions
             log.error("Cannot set user authentication: {}", e.getMessage());
         }
 

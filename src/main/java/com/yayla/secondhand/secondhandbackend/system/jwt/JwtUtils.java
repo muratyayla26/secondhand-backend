@@ -56,6 +56,7 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(key()).build().parse(authToken);
             return true;
         } catch (MalformedJwtException e) {
+            // TODO exception handler calısmıyo. sureklı access denied olan calısıyo 403 yerine 401 donemıyom
             log.error("Invalid JWT token: {}", e.getMessage());
         } catch(ExpiredJwtException e){
             log.error("JWT token is expired: {}", e.getMessage());
