@@ -34,7 +34,9 @@ public class RefreshTokenService {
     private final TokenRefreshDtoToEntityConvertor tokenRefreshDtoToEntityConvertor;
 
     public TokenRefreshDto retrieve(String token) {
-        RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(NotFoundException::new);
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(
+                () -> new TokenRefreshException("Refresh token not found.")
+        );
         return tokenRefreshEntityToDtoConvertor.convert(refreshToken);
     }
 
@@ -53,7 +55,7 @@ public class RefreshTokenService {
         if (tokenRefreshDto.getExpiryDate().compareTo(Instant.now()) < 0) {
             RefreshToken refreshToken = tokenRefreshDtoToEntityConvertor.convert(tokenRefreshDto);
             refreshTokenRepository.delete(refreshToken);
-            throw new TokenRefreshException(refreshToken.getToken(), "Refresh token was expired. Please make a new signin request");
+            throw new TokenRefreshException("Refresh token was expired. Please make a new login request");
         }
 
         return tokenRefreshDto;

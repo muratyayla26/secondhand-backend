@@ -56,16 +56,13 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(key()).build().parse(authToken);
             return true;
         } catch (MalformedJwtException e) {
-            // TODO exception handler calısmıyo. sureklı access denied olan calısıyo 403 yerine 401 donemıyom
-            log.error("Invalid JWT token: {}", e.getMessage());
+            throw new MalformedJwtException("Invalid JWT token: " + e.getMessage());
         } catch(ExpiredJwtException e){
-            log.error("JWT token is expired: {}", e.getMessage());
+            throw new ExpiredJwtException(e.getHeader(), e.getClaims(), "JWT token is expired: " + e.getMessage());
         } catch (UnsupportedJwtException e) {
-            log.error("JWT token is unsupported: {}", e.getMessage());
+            throw new UnsupportedJwtException("JWT token is unsupported: " + e.getMessage());
         } catch (IllegalArgumentException e){
-            log.error("JWT claims string is empty: {}", e.getMessage());
+            throw new IllegalArgumentException("JWT claims string is empty: " + e.getMessage());
         }
-
-        return false;
     }
 }

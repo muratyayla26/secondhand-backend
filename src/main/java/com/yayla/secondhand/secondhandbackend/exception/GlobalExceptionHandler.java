@@ -1,9 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.exception;
 
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -55,20 +52,8 @@ public class GlobalExceptionHandler {
         }
     }
 
-    @ExceptionHandler(TokenRefreshException.class)
-    public ResponseEntity<BaseResponse> handleBusinessException(TokenRefreshException exception) {
-        log.error(exception.getMessage(), exception);
-        try {
-            BaseResponse baseResponse = exceptionHelper.createErrorResponse(exception.getMessage());
-            return new ResponseEntity<>(baseResponse, HttpStatus.FORBIDDEN);
-        } catch (Exception ex) {
-            return exceptionHelper.getUnknownExceptionResponse(ex);
-        }
-    }
-
-    @ExceptionHandler({BadCredentialsException.class, MalformedJwtException.class,
-            ExpiredJwtException.class, UnsupportedJwtException.class, IllegalArgumentException.class})
-    public ResponseEntity<BaseResponse> handleBadCredentialsException(Exception exception) {
+    @ExceptionHandler({BadCredentialsException.class, TokenRefreshException.class})
+    public ResponseEntity<BaseResponse> handleUnauthorizedException(Exception exception) {
         log.error(exception.getMessage(), exception);
         try {
             BaseResponse baseResponse = exceptionHelper.createErrorResponse(exception.getMessage());

@@ -113,7 +113,5 @@ public class AuthManager {
         TokenRefreshResponse.TokenData tokenData = new TokenRefreshResponse.TokenData(accessToken,
                 requestRefreshToken, BEARER_PREFIX);
         return new TokenRefreshResponse(tokenData);
-        //                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-        //                        "Refresh token is not in database!"));
     }
 }
