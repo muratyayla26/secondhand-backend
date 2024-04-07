@@ -1,12 +1,3 @@
-CREATE TABLE IF NOT EXISTS profile (
-    profile_id SERIAL PRIMARY KEY,
-    profile_name VARCHAR(50) NOT NULL,
-    surname VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP(0) NOT NULL,
-    updated_at TIMESTAMP(0) DEFAULT NULL
-    );
-
 CREATE TABLE IF NOT EXISTS product (
     product_id SERIAL PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
@@ -17,6 +8,10 @@ CREATE TABLE IF NOT EXISTS product (
     updated_at TIMESTAMP(0) DEFAULT NULL,
     CONSTRAINT fk_profile_owner FOREIGN KEY (owner_id) REFERENCES profile(profile_id)
     );
+
+ALTER TABLE product DROP CONSTRAINT fk_profile_owner;
+ALTER TABLE product ADD CONSTRAINT fk_account_id FOREIGN KEY (owner_id) REFERENCES account(account_id);
+ALTER TABLE product ADD COLUMN product_type INT DEFAULT 0;
 
 CREATE TABLE IF NOT EXISTS account (
     account_id SERIAL PRIMARY KEY,

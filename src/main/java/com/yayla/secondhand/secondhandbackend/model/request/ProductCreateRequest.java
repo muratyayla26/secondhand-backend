@@ -1,5 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.model.request;
 
+import com.yayla.secondhand.secondhandbackend.model.enumtype.ProductType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class ProductCreateRequest {
     private String description;
 
     @NotNull
-    private Long ownerId;
+    private ProductType productType;
 }

@@ -1,7 +1,7 @@
 package com.yayla.secondhand.secondhandbackend.service;
 
-import com.yayla.secondhand.secondhandbackend.convertor.product.ProductEntityToDtoConvertor;
-import com.yayla.secondhand.secondhandbackend.convertor.product.ProductVoToEntityConvertor;
+
+import com.yayla.secondhand.secondhandbackend.convertor.product.ProductConvertor;
 import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.model.dto.ProductDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.Product;
@@ -20,21 +20,20 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductVoToEntityConvertor productVoToEntityConvertor;
-    private final ProductEntityToDtoConvertor productEntityToDtoConvertor;
+    private final ProductConvertor productConvertor;
 
     public ProductDto fetchProduct(Long productId) {
         Product product = productRepository.findById(productId).orElseThrow(NotFoundException::new);
         log.info("Product fetch has ended. productId: {}", product.getProductId());
-        return productEntityToDtoConvertor.convert(product);
+        return productConvertor.convert(product);
     }
 
     public ProductDto createProduct(ProductCreateVo productCreateVo) {
         log.info("Product creation has started. productCreateVo: {}", productCreateVo.toString());
-        Product product = productVoToEntityConvertor.convert(productCreateVo);
+        Product product = productConvertor.convert(productCreateVo);
         Product saved = productRepository.save(product);
         log.info("Product creation has ended. saved.getProductId: {}", saved.getProductId());
-        return productEntityToDtoConvertor.convert(saved);
+        return productConvertor.convert(saved);
     }
 
     public ProductDto updateProduct(ProductUpdateVo productUpdateVo) {
@@ -43,7 +42,7 @@ public class ProductService {
         updateValues(product, productUpdateVo);
         Product saved = productRepository.save(product);
         log.info("Product update has ended. saved.getProductId: {}", saved.getProductId());
-        return productEntityToDtoConvertor.convert(saved);
+        return productConvertor.convert(saved);
     }
 
     public void deleteProduct(Long productId) {
@@ -56,5 +55,6 @@ public class ProductService {
         Optional.of(productUpdateVo).map(ProductUpdateVo::getTitle).ifPresent(product::setTitle);
         Optional.of(productUpdateVo).map(ProductUpdateVo::getDescription).ifPresent(product::setDescription);
         Optional.of(productUpdateVo).map(ProductUpdateVo::isSold).ifPresent(product::setSold);
+        Optional.of(productUpdateVo).map(ProductUpdateVo::getProductType).ifPresent(product::setProductType);
     }
 }

@@ -5,6 +5,7 @@ import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface TokenRefreshDtoToEntityConvertor {
+public interface TokenRefreshConvertor {
     RefreshToken convert(TokenRefreshDto tokenRefreshDto);
+    TokenRefreshDto convert(RefreshToken refreshToken);
 }

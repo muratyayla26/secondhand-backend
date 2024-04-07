@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
         }
     }
 
-    @ExceptionHandler({BadCredentialsException.class, TokenRefreshException.class})
+    @ExceptionHandler({BadCredentialsException.class, AuthGeneralException.class})
     public ResponseEntity<BaseResponse> handleUnauthorizedException(Exception exception) {
         log.error(exception.getMessage(), exception);
         try {

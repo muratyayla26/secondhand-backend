@@ -1,5 +1,7 @@
 package com.yayla.secondhand.secondhandbackend.model.entity;
 
+import com.yayla.secondhand.secondhandbackend.convertor.product.ProductTypeConvertor;
+import com.yayla.secondhand.secondhandbackend.model.enumtype.ProductType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,10 @@ public class Product extends BaseEntity {
 
     @Column(name = "description")
     private String description;
+
+    @Convert(converter = ProductTypeConvertor.class)
+    @Column(name = "product_type")
+    private ProductType productType;
 
     @Column(name = "is_sold")
     private boolean isSold;
