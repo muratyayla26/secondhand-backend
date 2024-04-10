@@ -1,4 +1,4 @@
-package com.yayla.secondhand.secondhandbackend.repository;
+package com.yayla.secondhand.secondhandbackend.repository.security;
 
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
@@ -34,26 +34,25 @@ public class JwtUtils {
         Instant issuedAt = Instant.now();
         Instant expiration = issuedAt.plus(Duration.ofMillis(jwtExpirationMsLong));
 
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(Date.from(issuedAt))
-                .setExpiration(Date.from(expiration))
-                .signWith(key(), SignatureAlgorithm.HS256)
+        return Jwts.builder().subject(email)
+                .issuedAt(Date.from(issuedAt))
+                .expiration(Date.from(expiration))
+                .signWith(key())
                 .compact();
     }
 
-    private Key key() {
+    private SecretKey key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
     public String getEmailFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(key()).build()
-                .parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().verifyWith(key()).build().parseSignedClaims(token)
+                .getPayload().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(key()).build().parse(authToken);
+            Jwts.parser().verifyWith(key()).build().parseSignedClaims(authToken).getPayload();
             return true;
         } catch (MalformedJwtException e) {
             throw new MalformedJwtException("Invalid JWT token: " + e.getMessage());

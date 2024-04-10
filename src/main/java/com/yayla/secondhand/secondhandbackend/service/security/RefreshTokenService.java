@@ -3,13 +3,13 @@ package com.yayla.secondhand.secondhandbackend.service.security;
 import com.yayla.secondhand.secondhandbackend.convertor.auth.TokenRefreshConvertor;
 import com.yayla.secondhand.secondhandbackend.exception.AuthGeneralException;
 import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshDto;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
-import com.yayla.secondhand.secondhandbackend.repository.AccountRepository;
-import com.yayla.secondhand.secondhandbackend.repository.RefreshTokenRepository;
+import com.yayla.secondhand.secondhandbackend.repository.security.RefreshTokenRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -24,8 +24,8 @@ public class RefreshTokenService {
     private Long refreshTokenDurationMs;
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final AccountRepository accountRepository;
     private final TokenRefreshConvertor tokenRefreshConvertor;
+    private final AccountService accountService;
 
     public TokenRefreshDto retrieve(String token) {
         RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(
@@ -36,8 +36,8 @@ public class RefreshTokenService {
 
     public TokenRefreshDto createRefreshToken(Long accountId) {
         RefreshToken refreshToken = new RefreshToken();
-
-        refreshToken.setAccount(accountRepository.findById(accountId).get());
+        Account account = accountService.retrieve(accountId);
+        refreshToken.setAccount(account);
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
         refreshToken.setToken(UUID.randomUUID().toString());
 
@@ -56,7 +56,8 @@ public class RefreshTokenService {
     }
 
     @Transactional
-    public int deleteByUserId(Long userId) {
-        return refreshTokenRepository.deleteByAccount(accountRepository.findById(userId).get());
+    public int deleteByUserId(Long accountId) {
+        Account account = accountService.retrieve(accountId);
+        return refreshTokenRepository.deleteByAccount(account);
     }
 }

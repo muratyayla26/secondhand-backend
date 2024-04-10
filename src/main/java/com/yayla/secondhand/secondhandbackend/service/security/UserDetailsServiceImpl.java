@@ -1,7 +1,7 @@
 package com.yayla.secondhand.secondhandbackend.service.security;
 
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
-import com.yayla.secondhand.secondhandbackend.repository.AccountRepository;
+import com.yayla.secondhand.secondhandbackend.repository.security.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

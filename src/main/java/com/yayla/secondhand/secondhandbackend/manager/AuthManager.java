@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class AuthManager {
         String accessToken = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         TokenRefreshDto tokenRefreshDto = refreshTokenService.createRefreshToken(userDetails.getAccountId());
@@ -77,23 +78,19 @@ public class AuthManager {
         Set<String> strRoles = signupRequest.getRole();
         Set<AccountRole> roles = new HashSet<>();
 
-        if (strRoles == null) {
-            AccountRole accountRole = accountRoleService.retrieve(RoleType.ROLE_USER);
-            roles.add(accountRole);
+        if (strRoles == null || strRoles.isEmpty()) {
+            roles.add(accountRoleService.retrieve(RoleType.ROLE_USER));
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        AccountRole adminRole = accountRoleService.retrieve(RoleType.ROLE_ADMIN);
-                        roles.add(adminRole);
+                        roles.add(accountRoleService.retrieve(RoleType.ROLE_ADMIN));
                         break;
                     case "mod":
-                        AccountRole modRole = accountRoleService.retrieve(RoleType.ROLE_MODERATOR);
-                        roles.add(modRole);
+                        roles.add(accountRoleService.retrieve(RoleType.ROLE_MODERATOR));
                         break;
                     default:
-                        AccountRole userRole = accountRoleService.retrieve(RoleType.ROLE_USER);
-                        roles.add(userRole);
+                        roles.add(accountRoleService.retrieve(RoleType.ROLE_USER));
                 }
             });
         }

@@ -3,7 +3,7 @@ package com.yayla.secondhand.secondhandbackend.service.security;
 import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
-import com.yayla.secondhand.secondhandbackend.repository.AccountRoleRepository;
+import com.yayla.secondhand.secondhandbackend.repository.security.AccountRoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
