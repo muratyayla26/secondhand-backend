@@ -7,4 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DistrictConvertor {
     DistrictDto convert(District district);
+    District convert(DistrictDto districtDto);
+
 }

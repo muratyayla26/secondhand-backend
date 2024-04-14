@@ -22,5 +22,10 @@ public class ProfileCreateRequest {
 
     private String address;
 
+    private Integer cityId;
+
+    private Integer districtId;
+
     private GenderType genderType;
+
 }

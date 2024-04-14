@@ -12,5 +12,9 @@ public class ProfileUpdateVo {
 
     private String address;
 
+    private Integer cityId;
+
+    private Integer districtId;
+
     private Long accountId;
 }

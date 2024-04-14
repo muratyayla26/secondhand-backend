@@ -2,6 +2,7 @@ package com.yayla.secondhand.secondhandbackend.service;
 
 import com.yayla.secondhand.secondhandbackend.convertor.staticData.CityConvertor;
 import com.yayla.secondhand.secondhandbackend.convertor.staticData.DistrictConvertor;
+import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.model.dto.CityDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.DistrictDto;
 import com.yayla.secondhand.secondhandbackend.repository.CityRepository;
@@ -22,6 +23,14 @@ public class StaticDataService {
     private final DistrictRepository districtRepository;
     private final CityConvertor cityConvertor;
     private final DistrictConvertor districtConvertor;
+
+    public CityDto fetchCity(Integer cityId){
+        return cityRepository.findById(cityId).map(cityConvertor::convert).orElseThrow(NotFoundException::new);
+    }
+
+    public DistrictDto fetchDistrict(Integer districtId){
+        return districtRepository.findById(districtId).map(districtConvertor::convert).orElseThrow(NotFoundException::new);
+    }
 
     public List<CityDto> fetchCities() {
         return cityRepository.findAll().stream()

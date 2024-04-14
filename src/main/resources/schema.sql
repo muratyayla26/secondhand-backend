@@ -56,10 +56,14 @@ CREATE TABLE IF NOT EXISTS profile (
     last_name VARCHAR(100) NOT NULL,
     mobile_number VARCHAR(20),
     address VARCHAR(255),
+    city_id INT,
+    district_id INT,
     gender_type SMALLINT,
     account_id BIGINT NOT NULL,
     created_at TIMESTAMP(0) NOT NULL,
     updated_at TIMESTAMP(0) DEFAULT NULL,
     UNIQUE (account_id),
-    CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES account(account_id)
+    CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES account(account_id),
+    CONSTRAINT fk_city_id FOREIGN KEY (city_id) REFERENCES city(city_id),
+    CONSTRAINT fk_district_id FOREIGN KEY (district_id) REFERENCES district(district_id)
 );

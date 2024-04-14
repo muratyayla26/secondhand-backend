@@ -48,5 +48,7 @@ public class ProfileService {
     private void updateValues(Profile profile, ProfileUpdateVo profileUpdateVo) {
         Optional.of(profileUpdateVo).map(ProfileUpdateVo::getMobileNumber).ifPresent(profile::setMobileNumber);
         Optional.of(profileUpdateVo).map(ProfileUpdateVo::getAddress).ifPresent(profile::setAddress);
+        profile.setCityId(profileUpdateVo.getCityId());
+        profile.setDistrictId(profileUpdateVo.getDistrictId());
     }
 }

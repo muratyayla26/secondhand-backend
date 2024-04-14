@@ -11,4 +11,8 @@ public class ProfileUpdateRequest {
     private String mobileNumber;
 
     private String address;
+
+    private Integer cityId;
+
+    private Integer districtId;
 }

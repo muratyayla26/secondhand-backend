@@ -32,6 +32,20 @@ public class Profile extends BaseEntity {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "city_id")
+    private Integer cityId;
+
+    @Column(name = "district_id")
+    private Integer districtId;
+
+    @OneToOne
+    @JoinColumn(name = "city_id", referencedColumnName = "city_id", insertable = false, updatable = false)
+    private City city;
+
+    @OneToOne
+    @JoinColumn(name = "district_id", referencedColumnName = "district_id", insertable = false, updatable = false)
+    private District district;
+
     @Convert(converter = GenderTypeConvertor.class)
     @Column(name = "gender_type")
     private GenderType genderType;

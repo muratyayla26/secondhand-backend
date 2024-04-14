@@ -20,6 +20,10 @@ public class ProfileDto extends BaseDto{
 
     private String address;
 
+    private CityDto city;
+
+    private DistrictDto district;
+
     private GenderType genderType;
 
     private Long accountId;

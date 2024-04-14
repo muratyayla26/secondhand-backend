@@ -2,6 +2,8 @@ package com.yayla.secondhand.secondhandbackend.manager;
 
 import com.yayla.secondhand.secondhandbackend.convertor.profile.ProfileConvertor;
 import com.yayla.secondhand.secondhandbackend.exception.BusinessException;
+import com.yayla.secondhand.secondhandbackend.model.dto.CityDto;
+import com.yayla.secondhand.secondhandbackend.model.dto.DistrictDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.ProfileDto;
 import com.yayla.secondhand.secondhandbackend.model.request.ProfileCreateRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.ProfileUpdateRequest;
@@ -10,6 +12,8 @@ import com.yayla.secondhand.secondhandbackend.model.vo.ProfileCreateVo;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProfileUpdateVo;
 import com.yayla.secondhand.secondhandbackend.service.ProfileService;
 import com.yayla.secondhand.secondhandbackend.service.SessionInfoService;
+import com.yayla.secondhand.secondhandbackend.service.StaticDataService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,10 +26,11 @@ public class ProfileManager {
     private final ProfileService profileService;
     private final ProfileConvertor profileConvertor;
     private final SessionInfoService sessionInfoService;
+    private final StaticDataService staticDataService;
 
-    public ProfileResponse fetchProfile(){
+    public ProfileResponse fetchProfile() {
         Long currentAccountId = sessionInfoService.currentAccountId();
-        if(!profileService.checkProfileExists(currentAccountId)){
+        if (!profileService.checkProfileExists(currentAccountId)) {
             throw new BusinessException("Profile does not exists");
         }
 
@@ -34,32 +39,67 @@ public class ProfileManager {
     }
 
 
-    public ProfileResponse createProfile(ProfileCreateRequest profileCreateRequest){
+    public ProfileResponse createProfile(ProfileCreateRequest profileCreateRequest) {
         log.info("Profile creation has started. profileCreateRequest : {}", profileCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
-        if(profileService.checkProfileExists(currentAccountId)){
+        if (profileService.checkProfileExists(currentAccountId)) {
             throw new BusinessException("Profile already exists");
+        }
+
+        CityAndDistrictDto cityAndDistrictDto = new CityAndDistrictDto(null, null);
+        if (profileCreateRequest.getCityId() != null && profileCreateRequest.getCityId() > 0) {
+            cityAndDistrictDto = validateCityAndDistrict(profileCreateRequest.getCityId(), profileCreateRequest.getDistrictId());
+        } else {
+            profileCreateRequest.setDistrictId(null);
         }
 
         ProfileCreateVo profileCreateVo = profileConvertor.convert(profileCreateRequest, currentAccountId);
         ProfileDto profileDto = profileService.createProfile(profileCreateVo);
+        profileDto.setCity(cityAndDistrictDto.cityDto());
+        profileDto.setDistrict(cityAndDistrictDto.districtDto());
         return mapResponse(profileDto);
     }
 
-    public ProfileResponse updateProfile(ProfileUpdateRequest profileUpdateRequest){
+    public ProfileResponse updateProfile(ProfileUpdateRequest profileUpdateRequest) {
         log.info("Profile update has started. profileUpdateRequest : {}", profileUpdateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
-        if(!profileService.checkProfileExists(currentAccountId)){
+        if (!profileService.checkProfileExists(currentAccountId)) {
             throw new BusinessException("Profile does not exists");
         }
+
+        CityAndDistrictDto cityAndDistrictDto = new CityAndDistrictDto(null, null);
+        if (profileUpdateRequest.getCityId() != null && profileUpdateRequest.getCityId() > 0) {
+            cityAndDistrictDto = validateCityAndDistrict(profileUpdateRequest.getCityId(), profileUpdateRequest.getDistrictId());
+        } else {
+            profileUpdateRequest.setDistrictId(null);
+        }
+
         ProfileUpdateVo profileUpdateVo = profileConvertor.convert(profileUpdateRequest, currentAccountId);
         ProfileDto profileDto = profileService.updateProfile(profileUpdateVo);
+        profileDto.setCity(cityAndDistrictDto.cityDto());
+        profileDto.setDistrict(cityAndDistrictDto.districtDto());
         return mapResponse(profileDto);
+    }
+
+    private CityAndDistrictDto validateCityAndDistrict(Integer cityId, Integer districtId) {
+        CityDto cityDto = staticDataService.fetchCity(cityId);
+
+        if (districtId != null && districtId > 0) {
+            DistrictDto districtDto = staticDataService.fetchDistrict(districtId);
+            if (cityDto.getCityId() != districtDto.getCityId()) {
+                throw new BusinessException("City and district does not match.");
+            }
+            return new CityAndDistrictDto(cityDto, districtDto);
+        }
+        return new CityAndDistrictDto(cityDto, null);
     }
 
     private ProfileResponse mapResponse(ProfileDto profileDto) {
         ProfileResponse profileResponse = new ProfileResponse();
         profileResponse.setProfileDto(profileDto);
         return profileResponse;
+    }
+
+    record CityAndDistrictDto(CityDto cityDto, DistrictDto districtDto) {
     }
 }
