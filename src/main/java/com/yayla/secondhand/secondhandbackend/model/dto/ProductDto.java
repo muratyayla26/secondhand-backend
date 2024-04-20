@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -21,5 +24,7 @@ public class ProductDto extends BaseDto {
     private ProductType productType;
 
     private Long ownerId;
+
+    private List<CommentDto> comments = new ArrayList<>();
 
 }

@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -32,4 +35,9 @@ public class Product extends BaseEntity {
 
     @Column(name = "owner_id")
     private Long ownerId;
+
+    // TODO unidirectional muhabbeti, comment entitiyisi içinde productu tekrar getirmesin diye boyle yaptım
+    @OneToMany
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    private List<Comment> comments = new ArrayList<>();
 }

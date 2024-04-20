@@ -67,3 +67,25 @@ CREATE TABLE IF NOT EXISTS profile (
     CONSTRAINT fk_city_id FOREIGN KEY (city_id) REFERENCES city(city_id),
     CONSTRAINT fk_district_id FOREIGN KEY (district_id) REFERENCES district(district_id)
 );
+
+CREATE TABLE IF NOT EXISTS comment (
+  comment_id SERIAL PRIMARY KEY,
+  content VARCHAR(255) NOT NULL,
+  owner_id BIGINT NOT NULL,
+  product_id BIGINT NOT NULL,
+  created_at TIMESTAMP(0) NOT NULL,
+  updated_at TIMESTAMP(0) DEFAULT NULL,
+  CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES account(account_id),
+  CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+CREATE TABLE IF NOT EXISTS comment_answer (
+  comment_answer_id SERIAL PRIMARY KEY,
+    content VARCHAR(255) NOT NULL,
+    owner_id BIGINT NOT NULL,
+    comment_id BIGINT NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    updated_at TIMESTAMP(0) DEFAULT NULL,
+    CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES account(account_id),
+    CONSTRAINT fk_comment_id FOREIGN KEY (comment_id) REFERENCES comment(comment_id)
+);

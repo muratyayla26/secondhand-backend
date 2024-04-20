@@ -13,6 +13,7 @@ public class District extends BaseEntity {
 
     @Id
     @Column(name = "district_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int districtId;
 
     @Column(name = "district_name")

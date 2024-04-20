@@ -19,6 +19,4 @@ public class City extends BaseEntity {
     @Column(name = "city_name")
     private String cityName;
 
-    // TODO burda oneToMany kullansaydım jsonignorela sadece city isterken halledicektim.
-    // ama her city isteğinde full district getircekti. performans? json ignore ve oneTomany?
 }
