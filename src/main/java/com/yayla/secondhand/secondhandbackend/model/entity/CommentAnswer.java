@@ -28,4 +28,7 @@ public class CommentAnswer extends BaseEntity {
 //    @JoinColumn(name = "comment_id", insertable = false, updatable = false)
 //    private Comment comment;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    private ProfilePlain profile;
 }

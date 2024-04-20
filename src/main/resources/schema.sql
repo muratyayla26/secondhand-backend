@@ -89,3 +89,6 @@ CREATE TABLE IF NOT EXISTS comment_answer (
     CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES account(account_id),
     CONSTRAINT fk_comment_id FOREIGN KEY (comment_id) REFERENCES comment(comment_id)
 );
+
+CREATE VIEW profile_plain_view AS
+    SELECT profile_id, account_id, first_name, last_name from profile;

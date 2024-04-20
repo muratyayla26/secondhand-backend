@@ -21,4 +21,6 @@ public class CommentDto extends BaseDto{
     private Long productId;
 
     private List<CommentAnswerDto> commentAnswers = new ArrayList<>();
+
+    private ProfilePlainDto profile;
 }

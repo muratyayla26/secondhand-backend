@@ -23,6 +23,7 @@ public class ProductDto extends BaseDto {
 
     private ProductType productType;
 
+    // TODO bu ownerId leri account tablosu yerine profile tablosundaki id ile değiştirmeliyimiym? security?
     private Long ownerId;
 
     private List<CommentDto> comments = new ArrayList<>();

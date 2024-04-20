@@ -38,6 +38,6 @@ public class Product extends BaseEntity {
 
     // TODO unidirectional muhabbeti, comment entitiyisi içinde productu tekrar getirmesin diye boyle yaptım
     @OneToMany
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", insertable = false, updatable = false)
     private List<Comment> comments = new ArrayList<>();
 }

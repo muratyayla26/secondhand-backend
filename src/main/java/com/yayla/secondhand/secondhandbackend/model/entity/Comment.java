@@ -32,7 +32,10 @@ public class Comment extends BaseEntity {
 //    private Product product;
 
     @OneToMany
-    @JoinColumn(name = "comment_id", referencedColumnName = "comment_id")
+    @JoinColumn(name = "comment_id", referencedColumnName = "comment_id", insertable = false, updatable = false)
     private List<CommentAnswer> commentAnswers = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    private ProfilePlain profile;
 }
