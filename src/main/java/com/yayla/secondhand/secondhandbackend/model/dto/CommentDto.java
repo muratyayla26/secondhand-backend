@@ -16,8 +16,6 @@ public class CommentDto extends BaseDto{
 
     private String content;
 
-    private Long ownerId;
-
     private Long productId;
 
     private List<CommentAnswerDto> commentAnswers = new ArrayList<>();

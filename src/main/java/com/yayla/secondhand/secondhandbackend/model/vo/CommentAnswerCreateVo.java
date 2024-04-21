@@ -13,4 +13,7 @@ public class CommentAnswerCreateVo {
     private Long commentId;
 
     private Long ownerId;
+
+    private Long productId;
+
 }

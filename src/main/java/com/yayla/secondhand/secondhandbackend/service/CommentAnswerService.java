@@ -4,6 +4,7 @@ import com.yayla.secondhand.secondhandbackend.convertor.comment.CommentAnswerCon
 import com.yayla.secondhand.secondhandbackend.model.entity.CommentAnswer;
 import com.yayla.secondhand.secondhandbackend.model.vo.CommentAnswerCreateVo;
 import com.yayla.secondhand.secondhandbackend.repository.CommentAnswerRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,12 @@ public class CommentAnswerService {
         CommentAnswer commentAnswer = commentAnswerConvertor.convert(commentAnswerCreateVo);
         CommentAnswer saved = commentAnswerRepository.save(commentAnswer);
         log.info("Comment answer has been saved. commentAnswer: {}", saved.getCommentAnswerId());
+    }
 
+    @Transactional
+    public void deleteProductsCommentsAnswers(Long productId){
+        log.info("Delete products comments answers has started. productId: {}", productId);
+        commentAnswerRepository.removeAllCommentsAnswers(productId);
+        log.info("Delete products comments answers has ended. productId: {}", productId);
     }
 }

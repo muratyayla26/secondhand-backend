@@ -25,21 +25,21 @@ public class StaticDataService {
     private final DistrictConvertor districtConvertor;
 
     public CityDto fetchCity(Integer cityId){
-        return cityRepository.findById(cityId).map(cityConvertor::convert).orElseThrow(NotFoundException::new);
+        return cityRepository.findByCityIdAndIsDeletedIsFalse(cityId).map(cityConvertor::convert).orElseThrow(NotFoundException::new);
     }
 
     public DistrictDto fetchDistrict(Integer districtId){
-        return districtRepository.findById(districtId).map(districtConvertor::convert).orElseThrow(NotFoundException::new);
+        return districtRepository.findByDistrictIdAndIsDeletedIsFalse(districtId).map(districtConvertor::convert).orElseThrow(NotFoundException::new);
     }
 
     public List<CityDto> fetchCities() {
-        return cityRepository.findAll().stream()
+        return cityRepository.findAllByIsDeletedIsFalse().stream()
                 .map(cityConvertor::convert)
                 .collect(Collectors.toList());
     }
 
     public List<DistrictDto> fetchDistricts(Integer cityId) {
-        return districtRepository.findByCityId(cityId).stream()
+        return districtRepository.findByCityIdAndIsDeletedIsFalse(cityId).stream()
                 .map(districtConvertor::convert)
                 .collect(Collectors.toList());
     }

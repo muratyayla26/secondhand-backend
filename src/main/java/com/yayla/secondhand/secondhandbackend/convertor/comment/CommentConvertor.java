@@ -1,5 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.convertor.comment;
 
+import com.yayla.secondhand.secondhandbackend.model.dto.CommentDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.Comment;
 import com.yayla.secondhand.secondhandbackend.model.request.CommentCreateRequest;
 import com.yayla.secondhand.secondhandbackend.model.vo.CommentCreateVo;
@@ -10,4 +11,5 @@ public interface CommentConvertor {
 
     CommentCreateVo convert(CommentCreateRequest commentCreateRequest, Long ownerId);
     Comment convert(CommentCreateVo commentCreateVo);
+    CommentDto convert(Comment comment);
 }

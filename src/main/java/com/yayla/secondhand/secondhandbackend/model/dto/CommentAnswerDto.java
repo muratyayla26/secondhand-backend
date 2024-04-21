@@ -15,7 +15,5 @@ public class CommentAnswerDto extends BaseDto{
 
     private Long commentId;
 
-    private Long ownerId;
-
     private ProfilePlainDto profile;
 }

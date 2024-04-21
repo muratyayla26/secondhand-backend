@@ -26,4 +26,7 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
 }

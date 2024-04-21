@@ -40,4 +40,8 @@ public class Product extends BaseEntity {
     @OneToMany
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", insertable = false, updatable = false)
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "account_id", insertable = false, updatable = false)
+    private ProfilePlain profile;
 }

@@ -11,8 +11,6 @@ public class ProfilePlainDto {
 
     private Long profileId;
 
-    private Long accountId;
-
     private String firstName;
 
     private String lastName;

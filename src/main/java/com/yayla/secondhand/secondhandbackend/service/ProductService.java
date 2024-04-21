@@ -23,7 +23,7 @@ public class ProductService {
     private final ProductConvertor productConvertor;
 
     public ProductDto fetchProduct(Long productId) {
-        Product product = productRepository.findById(productId).orElseThrow(NotFoundException::new);
+        Product product = productRepository.findByProductIdAndIsDeletedIsFalse(productId).orElseThrow(NotFoundException::new);
         log.info("Product fetch has ended. productId: {}", product.getProductId());
         return productConvertor.convert(product);
     }
@@ -38,7 +38,7 @@ public class ProductService {
 
     public ProductDto updateProduct(ProductUpdateVo productUpdateVo) {
         log.info("Product update has started. productUpdateVo: {}", productUpdateVo.toString());
-        Product product = productRepository.findById(productUpdateVo.getProductId()).orElseThrow(NotFoundException::new);
+        Product product = productRepository.findByProductIdAndIsDeletedIsFalse(productUpdateVo.getProductId()).orElseThrow(NotFoundException::new);
         updateValues(product, productUpdateVo);
         Product saved = productRepository.save(product);
         log.info("Product update has ended. saved.getProductId: {}", saved.getProductId());
@@ -47,7 +47,9 @@ public class ProductService {
 
     public void deleteProduct(Long productId) {
         log.info("Product delete has started. productId: {}", productId);
-        productRepository.deleteById(productId);
+        Product product = productRepository.findByProductIdAndIsDeletedIsFalse(productId).orElseThrow(NotFoundException::new);
+        product.setDeleted(true);
+        productRepository.save(product);
         log.info("Product delete has ended. productId: {}", productId);
     }
 

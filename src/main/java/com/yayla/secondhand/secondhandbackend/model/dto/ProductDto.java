@@ -1,5 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.ProductType;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,9 +24,11 @@ public class ProductDto extends BaseDto {
 
     private ProductType productType;
 
-    // TODO bu ownerId leri account tablosu yerine profile tablosundaki id ile değiştirmeliyimiym? security?
+    @JsonIgnore
     private Long ownerId;
 
     private List<CommentDto> comments = new ArrayList<>();
+
+    private ProfilePlainDto profile;
 
 }
