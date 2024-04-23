@@ -27,15 +27,24 @@ public class CommentService {
     }
 
     public CommentDto fetchComment(Long commentId) {
+        log.info("Comment fetch has started. commentId: {}", commentId);
         Comment comment = commentRepository.findByCommentIdAndIsDeletedIsFalse(commentId).orElseThrow(NotFoundException::new);
         log.info("Comment fetch has ended. commentId: {}", comment.getCommentId());
         return commentConvertor.convert(comment);
     }
 
+    public void deleteComment(Long commentId) {
+        log.info("Comment delete has started. commentId: {}", commentId);
+        Comment comment = commentRepository.findByCommentIdAndIsDeletedIsFalse(commentId).orElseThrow(NotFoundException::new);
+        comment.setDeleted(true);
+        commentRepository.save(comment);
+        log.info("Comment delete has ended. commentId: {}", commentId);
+    }
+
     @Transactional
     public void deleteProductsComments(Long productId) {
         log.info("Delete products comments has started. productId: {}", productId);
-        commentRepository.removeAllComments(productId);
+        commentRepository.removeAllCommentsByProductId(productId);
         log.info("Delete products comments has ended. productId: {}", productId);
     }
 }

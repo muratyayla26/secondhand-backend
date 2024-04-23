@@ -5,6 +5,7 @@ import com.yayla.secondhand.secondhandbackend.model.enumtype.ProductType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Product extends BaseEntity {
 
     // TODO unidirectional muhabbeti, comment entitiyisi içinde productu tekrar getirmesin diye boyle yaptım
     @OneToMany
+    @SQLRestriction("is_deleted = false")
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", insertable = false, updatable = false)
     private List<Comment> comments = new ArrayList<>();
 

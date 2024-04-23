@@ -73,7 +73,7 @@ public class ProductManager {
     private void validateAccess(Long productId, Long currentAccountId) {
         ProductDto productDto = productService.fetchProduct(productId);
         if(!productDto.getOwnerId().equals(currentAccountId)) {
-            throw new AccessDeniedException("You are not authorized to modify this product");
+            throw new AccessDeniedException("You do not have access to this product");
         }
     }
 

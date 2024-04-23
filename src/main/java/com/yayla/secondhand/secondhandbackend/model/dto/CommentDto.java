@@ -1,5 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,4 +22,7 @@ public class CommentDto extends BaseDto{
     private List<CommentAnswerDto> commentAnswers = new ArrayList<>();
 
     private ProfilePlainDto profile;
+
+    @JsonIgnore
+    private Long ownerId;
 }

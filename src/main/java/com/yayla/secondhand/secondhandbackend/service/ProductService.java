@@ -23,6 +23,7 @@ public class ProductService {
     private final ProductConvertor productConvertor;
 
     public ProductDto fetchProduct(Long productId) {
+        log.info("Product fetch has started. productId: {}", productId);
         Product product = productRepository.findByProductIdAndIsDeletedIsFalse(productId).orElseThrow(NotFoundException::new);
         log.info("Product fetch has ended. productId: {}", product.getProductId());
         return productConvertor.convert(product);

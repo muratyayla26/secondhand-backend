@@ -17,5 +17,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             set c.isDeleted=true
             where c.productId=:productId and c.isDeleted=false
             """)
-    void removeAllComments(@Param("productId") Long productId);
+    void removeAllCommentsByProductId(@Param("productId") Long productId);
 }

@@ -20,4 +20,10 @@ public class CommentController {
     public BaseResponse createComment(@Valid @RequestBody CommentCreateRequest commentCreateRequest) {
         return commentManager.createComment(commentCreateRequest);
     }
+
+    @DeleteMapping("/{commentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public BaseResponse deleteComment(@PathVariable Long commentId) {
+        return commentManager.deleteComment(commentId);
+    }
 }
