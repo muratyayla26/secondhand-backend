@@ -51,7 +51,7 @@ public class ProductManager {
         ProductDto productDto = productService.updateProduct(productUpdateVo);
         return mapResponse(productDto);
     }
-    // TODO EnableTransactionManagement,clearAutomatically = true, flushAutomatically = true araştır
+
     // TODO product silme yoruma bağlı kaldı. Business açısından saçma duruyo. Napmak lzm?
     @Transactional
     public BaseResponse deleteProduct(Long productId) {

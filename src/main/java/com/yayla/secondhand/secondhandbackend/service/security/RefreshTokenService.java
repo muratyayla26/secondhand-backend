@@ -55,6 +55,7 @@ public class RefreshTokenService {
         return tokenRefreshDto;
     }
 
+    // TODO AUTH GENEL OLARAK
     @Transactional
     public int deleteByUserId(Long accountId) {
         Account account = accountService.retrieve(accountId);
