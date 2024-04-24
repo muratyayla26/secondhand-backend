@@ -25,3 +25,13 @@ yayla:
     jwtRefreshExpirationMs: 86400000
     #jwtExpirationMs: 120000
     #jwtRefreshExpirationMs: 240000
+
+aws:
+  access:
+    key: ***
+  secret:
+    key: ***
+  s3:
+    bucket: ***
+    region: ***
+    endpoint: ***
