@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -27,4 +29,6 @@ public class ProfileDto extends BaseDto{
     private GenderType genderType;
 
     private Long accountId;
+
+    private UUID profileImageKey;
 }

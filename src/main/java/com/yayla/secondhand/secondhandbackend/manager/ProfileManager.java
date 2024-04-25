@@ -7,16 +7,23 @@ import com.yayla.secondhand.secondhandbackend.model.dto.DistrictDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.ProfileDto;
 import com.yayla.secondhand.secondhandbackend.model.request.ProfileCreateRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.ProfileUpdateRequest;
+import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProfileResponse;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProfileCreateVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.ProfileImageVo;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProfileUpdateVo;
 import com.yayla.secondhand.secondhandbackend.service.ProfileService;
 import com.yayla.secondhand.secondhandbackend.service.SessionInfoService;
 import com.yayla.secondhand.secondhandbackend.service.StaticDataService;
 
+import com.yayla.secondhand.secondhandbackend.system.utility.MediaHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
+
 
 @Slf4j
 @Service
@@ -101,5 +108,16 @@ public class ProfileManager {
     }
 
     record CityAndDistrictDto(CityDto cityDto, DistrictDto districtDto) {
+    }
+
+    public BaseResponse uploadProfileImage(MultipartFile file) {
+        log.info("Profile image has started.");
+        MediaHelper.validateImageType(file);
+        UUID fileKey = MediaHelper.generateImageKey();
+        String bucketPath = MediaHelper.generateBucketPath(MediaHelper.PROFILE_BUCKET_FOLDER, fileKey);
+        Long currentAccountId = sessionInfoService.currentAccountId();
+        ProfileImageVo profileImageVo = profileConvertor.convert(currentAccountId, file, fileKey, bucketPath);
+        profileService.changeProfileImage(profileImageVo);
+        return new BaseResponse();
     }
 }

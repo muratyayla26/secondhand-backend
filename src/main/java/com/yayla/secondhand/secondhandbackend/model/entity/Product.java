@@ -36,7 +36,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "owner_id")
     private Long ownerId;
-
+    // TODO Business açısından, mesela comment tarafında bir şey oldu datayı alamadı, product fail olabilir?
     // TODO unidirectional muhabbeti, comment entitiyisi içinde productu tekrar getirmesin diye boyle yaptım
     @OneToMany
     @SQLRestriction("is_deleted = false")

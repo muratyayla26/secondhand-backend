@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS profile (
     gender_type SMALLINT,
     account_id BIGINT NOT NULL,
     is_deleted boolean DEFAULT FALSE NOT NULL,
+    profile_image_key UUID,
     created_at TIMESTAMP(0) NOT NULL,
     updated_at TIMESTAMP(0) DEFAULT NULL,
     UNIQUE (account_id),
@@ -100,4 +101,4 @@ CREATE TABLE IF NOT EXISTS comment_answer (
 );
 
 CREATE VIEW profile_plain_view AS
-    SELECT profile_id, account_id, first_name, last_name from profile;
+    SELECT profile_id, account_id, first_name, last_name, profile_image_key from profile;

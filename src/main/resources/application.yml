@@ -28,10 +28,10 @@ yayla:
 
 aws:
   access:
-    key: ***
+    key: ${AWS_ACCESS_KEY}
   secret:
-    key: ***
+    key: ${AWS_SECRET_KEY}
   s3:
-    bucket: ***
-    region: ***
-    endpoint: ***
+    bucket: ${AWS_S3_BUCKET}
+    region: ${AWS_S3_REGION}
+    endpoint: ${AWS_S3_ENDPOINT}

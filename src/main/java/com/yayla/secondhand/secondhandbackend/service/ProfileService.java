@@ -5,13 +5,17 @@ import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.model.dto.ProfileDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.Profile;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProfileCreateVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.ProfileImageVo;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProfileUpdateVo;
 import com.yayla.secondhand.secondhandbackend.repository.ProfileRepository;
+import com.yayla.secondhand.secondhandbackend.system.utility.MediaHelper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -20,6 +24,7 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
     private final ProfileConvertor profileConvertor;
+    private final S3Service s3Service;
 
     public Boolean checkProfileExists(Long accountId) {
         return profileRepository.existsByAccountId(accountId);
@@ -43,6 +48,27 @@ public class ProfileService {
         Profile saved = profileRepository.save(profile);
         log.info("Profile update has ended. saved.getProfileId: {}", saved.getProfileId());
         return profileConvertor.convert(saved);
+    }
+
+    @Transactional
+    public void changeProfileImage(ProfileImageVo profileImageVo) {
+        log.info("Profile image has started. profileImageVo: {}", profileImageVo.toString());
+        Profile profile = profileRepository.findByAccountId(profileImageVo.getAccountId()).orElseThrow(NotFoundException::new);
+        UUID currImageKey = profile.getProfileImageKey();
+        s3Service.uploadFile(profileImageVo.getFile(), profileImageVo.getBucketPath());
+        profile.setProfileImageKey(profileImageVo.getFileKey());
+        profileRepository.save(profile);
+        deleteProfileImageIfExists(currImageKey);
+        log.info("Profile image has ended. profileImageVo: {}", profileImageVo.toString());
+    }
+
+    public void deleteProfileImageIfExists(UUID currImageKey) {
+        if (currImageKey != null) {
+            log.info("Profile image deletion has been started. profileImageKey: {}", currImageKey);
+            String bucketPath = MediaHelper.generateBucketPath(MediaHelper.PROFILE_BUCKET_FOLDER, currImageKey);
+            s3Service.deleteFile(bucketPath);
+            log.info("Profile image has been deleted. profileImageKey: {}", currImageKey);
+        }
     }
 
     private void updateValues(Profile profile, ProfileUpdateVo profileUpdateVo) {

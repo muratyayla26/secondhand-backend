@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -53,4 +55,6 @@ public class Profile extends BaseEntity {
     @Column(name = "account_id", unique = true)
     private Long accountId;
 
+    @Column(name = "profile_image_key")
+    private UUID profileImageKey;
 }

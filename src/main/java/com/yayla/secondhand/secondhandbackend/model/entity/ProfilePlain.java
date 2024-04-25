@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.Immutable;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Immutable
@@ -22,4 +24,7 @@ public class ProfilePlain {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "profile_image_key")
+    private UUID profileImageKey;
 }

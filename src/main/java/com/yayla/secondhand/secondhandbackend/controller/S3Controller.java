@@ -1,6 +1,5 @@
 package com.yayla.secondhand.secondhandbackend.controller;
 
-import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -19,13 +18,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class S3Controller {
     private final S3Service s3Service;
-
-    @PostMapping(value = "/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ResponseStatus(HttpStatus.CREATED)
-    public BaseResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        s3Service.uploadFile(file, "product/" + file.getOriginalFilename());
-        return new BaseResponse();
-    }
 
     @GetMapping("/download/{fileName}")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String fileName) {

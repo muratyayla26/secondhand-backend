@@ -3,11 +3,16 @@ package com.yayla.secondhand.secondhandbackend.controller;
 import com.yayla.secondhand.secondhandbackend.manager.ProfileManager;
 import com.yayla.secondhand.secondhandbackend.model.request.ProfileCreateRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.ProfileUpdateRequest;
+import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProfileResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "/api/v1/profile")
@@ -34,5 +39,9 @@ public class ProfileController {
         return profileManager.updateProfile(profileUpdateRequest);
     }
 
-
+    @PostMapping(value = "/upload-image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public BaseResponse uploadProfileImage(@RequestParam("file") MultipartFile file) throws IOException {
+        return profileManager.uploadProfileImage(file);
+    }
 }
