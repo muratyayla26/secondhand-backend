@@ -102,3 +102,13 @@ CREATE TABLE IF NOT EXISTS comment_answer (
 
 CREATE VIEW profile_plain_view AS
     SELECT profile_id, account_id, first_name, last_name, profile_image_key from profile;
+
+ CREATE TABLE IF NOT EXISTS product_media (
+    media_id SERIAL PRIMARY KEY,
+    product_id BIGINT NOT NULL,
+    media_key UUID NOT NULL,
+    is_deleted boolean DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    updated_at TIMESTAMP(0) DEFAULT NULL,
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(product_id)
+);

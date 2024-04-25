@@ -8,7 +8,9 @@ import com.yayla.secondhand.secondhandbackend.model.response.ProductResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -40,5 +42,15 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public BaseResponse deleteProduct(@PathVariable Long productId) {
         return productManager.deleteProduct(productId);
+    }
+
+    @PostMapping("/upload-images/{productId}")
+    public ResponseEntity<BaseResponse> uploadProductImages(@PathVariable Long productId, @RequestParam("files") MultipartFile[] files) {
+        BaseResponse baseResponse = productManager.uploadProductImages(productId, files);
+        if (baseResponse.getErrorMessage() != null && !baseResponse.getErrorMessage().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(baseResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(baseResponse);
+        }
     }
 }

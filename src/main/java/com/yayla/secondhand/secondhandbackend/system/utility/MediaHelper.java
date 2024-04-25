@@ -27,10 +27,13 @@ public class MediaHelper {
         if(file.isEmpty()) {
             throw new BusinessException("File is empty");
         }
-
         if(!allowedImageTypes.contains(file.getContentType())) {
             throw new BusinessException("Unsupported image type");
         }
+    }
+
+    public boolean validateImageType(MultipartFile file, boolean isBoolControl) {
+        return !file.isEmpty() && allowedImageTypes.contains(file.getContentType());
     }
 
     public UUID generateImageKey(){

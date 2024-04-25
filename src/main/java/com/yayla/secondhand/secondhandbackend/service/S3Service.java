@@ -21,14 +21,9 @@ public class S3Service {
 
     private final S3Properties s3Properties;
 
-    public void uploadFile(MultipartFile file, String keyName) {
-        try {
+    public void uploadFile(MultipartFile file, String keyName) throws IOException {
             PutObjectResult result = s3Client.putObject(s3Properties.getBucketName(), keyName, file.getInputStream(), null);
             log.info("Upload file successfully : {}", result.getMetadata());
-        } catch (IOException exception) {
-            log.error(exception.getMessage(), exception);
-            throw new BusinessException("Failed to upload file");
-        }
     }
 
     public S3Object getFile(String keyName) {

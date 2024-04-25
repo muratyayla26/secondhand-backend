@@ -4,17 +4,14 @@ import com.yayla.secondhand.secondhandbackend.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 
 @RestController
-@RequestMapping(path = "/api/v1/file")
+@RequestMapping(path = "/api/v1/file-test")
 @RequiredArgsConstructor
 public class S3Controller {
     private final S3Service s3Service;
@@ -28,7 +25,7 @@ public class S3Controller {
 
     @GetMapping("/view/{fileName}")
     public ResponseEntity<InputStreamResource> viewFile(@PathVariable String fileName) {
-        var s3Object = s3Service.getFile(fileName);
+        var s3Object = s3Service.getFile("product/" + fileName);
         var content = s3Object.getObjectContent();
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)

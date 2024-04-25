@@ -1,6 +1,7 @@
 package com.yayla.secondhand.secondhandbackend.service;
 
 import com.yayla.secondhand.secondhandbackend.convertor.profile.ProfileConvertor;
+import com.yayla.secondhand.secondhandbackend.exception.BusinessException;
 import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.model.dto.ProfileDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.Profile;
@@ -55,11 +56,16 @@ public class ProfileService {
         log.info("Profile image has started. profileImageVo: {}", profileImageVo.toString());
         Profile profile = profileRepository.findByAccountId(profileImageVo.getAccountId()).orElseThrow(NotFoundException::new);
         UUID currImageKey = profile.getProfileImageKey();
-        s3Service.uploadFile(profileImageVo.getFile(), profileImageVo.getBucketPath());
-        profile.setProfileImageKey(profileImageVo.getFileKey());
-        profileRepository.save(profile);
-        deleteProfileImageIfExists(currImageKey);
-        log.info("Profile image has ended. profileImageVo: {}", profileImageVo.toString());
+        try {
+            s3Service.uploadFile(profileImageVo.getFile(), profileImageVo.getBucketPath());
+            profile.setProfileImageKey(profileImageVo.getFileKey());
+            profileRepository.save(profile);
+            deleteProfileImageIfExists(currImageKey);
+            log.info("Profile image has ended. profileImageVo: {}", profileImageVo.toString());
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
+            throw new BusinessException("Failed to upload file");
+        }
     }
 
     public void deleteProfileImageIfExists(UUID currImageKey) {
