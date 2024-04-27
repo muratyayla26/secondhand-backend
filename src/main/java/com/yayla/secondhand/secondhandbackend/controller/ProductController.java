@@ -2,6 +2,7 @@ package com.yayla.secondhand.secondhandbackend.controller;
 
 import com.yayla.secondhand.secondhandbackend.manager.ProductManager;
 import com.yayla.secondhand.secondhandbackend.model.request.ProductCreateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.ProductImagesDeleteRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.ProductUpdateRequest;
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProductResponse;
@@ -52,5 +53,10 @@ public class ProductController {
         } else {
             return ResponseEntity.status(HttpStatus.CREATED).body(baseResponse);
         }
+    }
+
+    @PostMapping("/delete-images/{productId}")
+    public BaseResponse deleteProductImages(@PathVariable Long productId, @Valid @RequestBody ProductImagesDeleteRequest productImagesDeleteRequest) {
+        return productManager.deleteProductImages(productId, productImagesDeleteRequest);
     }
 }

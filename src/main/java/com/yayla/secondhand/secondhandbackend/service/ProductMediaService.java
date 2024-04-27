@@ -1,9 +1,14 @@
 package com.yayla.secondhand.secondhandbackend.service;
 
 import com.yayla.secondhand.secondhandbackend.convertor.product.ProductMediaConvertor;
+import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
+import com.yayla.secondhand.secondhandbackend.model.dto.ProductDto;
+import com.yayla.secondhand.secondhandbackend.model.dto.ProductMediaDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.ProductMedia;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProductImageVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.ProductImagesDeleteVo;
 import com.yayla.secondhand.secondhandbackend.repository.ProductMediaRepository;
+import com.yayla.secondhand.secondhandbackend.system.utility.MediaHelper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -37,5 +43,35 @@ public class ProductMediaService {
         }
         log.info("Product's image upload has ended. productId: {}", productId);
         return failedImages;
+    }
+
+    @Transactional
+    public void deleteProductImages(Long productId, ProductImagesDeleteVo productImagesDeleteVo) {
+        log.info("Product's image delete has started. productId: {}", productId);
+        for (Long imageId : productImagesDeleteVo.getImageIds()) {
+            ProductMedia productMedia = productMediaRepository.findProductMediaByMediaIdAndProductIdAndIsDeletedIsFalse(imageId, productId).orElseThrow(NotFoundException::new);
+            productMedia.setDeleted(true);
+            productMediaRepository.save(productMedia);
+            deleteProductImageIfExists(productMedia.getMediaKey());
+        }
+    }
+
+    @Transactional
+    public void deleteProductImages(Long productId, ProductDto productDto) {
+        log.info("Product's all images delete has started. productId: {}", productId);
+        productMediaRepository.removeAllProductsMediaByProductId(productId);
+        log.info("Product's all images delete has ended. productId: {}", productId);
+        for (ProductMediaDto productMedia : productDto.getProductMedias()) {
+            deleteProductImageIfExists(productMedia.getMediaKey());
+        }
+    }
+
+    private void deleteProductImageIfExists(UUID currImageKey) {
+        if (currImageKey != null) {
+            log.info("Product image deletion has been started. currImageKey: {}", currImageKey);
+            String bucketPath = MediaHelper.generateBucketPath(MediaHelper.PRODUCT_BUCKET_FOLDER, currImageKey);
+            s3Service.deleteFile(bucketPath);
+            log.info("Product image has been deleted. currImageKey: {}", currImageKey);
+        }
     }
 }

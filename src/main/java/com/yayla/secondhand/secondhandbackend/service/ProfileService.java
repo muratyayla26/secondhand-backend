@@ -68,7 +68,7 @@ public class ProfileService {
         }
     }
 
-    public void deleteProfileImageIfExists(UUID currImageKey) {
+    private void deleteProfileImageIfExists(UUID currImageKey) {
         if (currImageKey != null) {
             log.info("Profile image deletion has been started. profileImageKey: {}", currImageKey);
             String bucketPath = MediaHelper.generateBucketPath(MediaHelper.PROFILE_BUCKET_FOLDER, currImageKey);

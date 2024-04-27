@@ -46,4 +46,9 @@ public class Product extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "account_id", insertable = false, updatable = false)
     private ProfilePlain profile;
+
+    @OneToMany
+    @SQLRestriction("is_deleted = false")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", insertable = false, updatable = false)
+    private List<ProductMedia> productMedias = new ArrayList<>();
 }

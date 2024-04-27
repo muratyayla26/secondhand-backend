@@ -31,4 +31,6 @@ public class ProductDto extends BaseDto {
 
     private ProfilePlainDto profile;
 
+    private List<ProductMediaDto> productMedias = new ArrayList<>();
+
 }

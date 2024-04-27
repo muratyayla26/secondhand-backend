@@ -1,14 +1,17 @@
 package com.yayla.secondhand.secondhandbackend.manager;
 
 import com.yayla.secondhand.secondhandbackend.convertor.product.ProductConvertor;
+import com.yayla.secondhand.secondhandbackend.convertor.product.ProductMediaConvertor;
 import com.yayla.secondhand.secondhandbackend.exception.BusinessException;
 import com.yayla.secondhand.secondhandbackend.model.dto.ProductDto;
 import com.yayla.secondhand.secondhandbackend.model.request.ProductCreateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.ProductImagesDeleteRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.ProductUpdateRequest;
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProductResponse;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProductCreateVo;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProductImageVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.ProductImagesDeleteVo;
 import com.yayla.secondhand.secondhandbackend.model.vo.ProductUpdateVo;
 import com.yayla.secondhand.secondhandbackend.service.*;
 import com.yayla.secondhand.secondhandbackend.system.utility.MediaHelper;
@@ -34,6 +37,7 @@ public class ProductManager {
     private final CommentService commentService;
     private final CommentAnswerService commentAnswerService;
     private final ProductMediaService productMediaService;
+    private final ProductMediaConvertor productMediaConvertor;
 
     public ProductResponse fetchProduct(Long productId) {
         log.info("Product fetch has started. productId : {}", productId);
@@ -64,8 +68,10 @@ public class ProductManager {
         log.info("Product delete has started. productId: {}", productId);
         Long currentAccountId = sessionInfoService.currentAccountId();
         validateAccess(productId, currentAccountId);
+        ProductDto productDto = productService.fetchProduct(productId);
         commentAnswerService.deleteProductsCommentsAnswers(productId);
         commentService.deleteProductsComments(productId);
+        productMediaService.deleteProductImages(productId, productDto);
         productService.deleteProduct(productId);
         return new BaseResponse();
     }
@@ -100,6 +106,14 @@ public class ProductManager {
             baseResponse.setErrorMessage(String.join(", ", invalidImages));
         }
         return baseResponse;
+    }
+    public BaseResponse deleteProductImages(Long productId, ProductImagesDeleteRequest productImagesDeleteRequest) {
+        log.info("Product's image delete has started. productId : {}", productId);
+        Long currentAccountId = sessionInfoService.currentAccountId();
+        validateAccess(productId, currentAccountId);
+        ProductImagesDeleteVo productImagesDeleteVo = productMediaConvertor.convert(productImagesDeleteRequest);
+        productMediaService.deleteProductImages(productId, productImagesDeleteVo);
+        return new BaseResponse();
     }
 
     private ProductResponse mapResponse(ProductDto productDto){
