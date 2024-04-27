@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,5 +33,9 @@ public class ProductDto extends BaseDto {
     private ProfilePlainDto profile;
 
     private List<ProductMediaDto> productMedias = new ArrayList<>();
+
+    private BigDecimal price;
+
+    private CurrencyDto currency;
 
 }

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -15,4 +17,6 @@ public class ProductUpdateVo {
     private String description;
     private ProductType productType;
     private boolean isSold;
+    private BigDecimal price;
+
 }

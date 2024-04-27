@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,4 +52,14 @@ public class Product extends BaseEntity {
     @SQLRestriction("is_deleted = false")
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", insertable = false, updatable = false)
     private List<ProductMedia> productMedias = new ArrayList<>();
+
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "currency_id")
+    private Integer currencyId;
+
+    @ManyToOne
+    @JoinColumn(name = "currency_id", referencedColumnName = "currency_id", insertable = false, updatable = false)
+    private Currency currency;
 }

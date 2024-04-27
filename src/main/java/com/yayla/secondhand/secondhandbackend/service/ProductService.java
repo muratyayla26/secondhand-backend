@@ -33,6 +33,7 @@ public class ProductService {
         log.info("Product creation has started. productCreateVo: {}", productCreateVo.toString());
         Product product = productConvertor.convert(productCreateVo);
         Product saved = productRepository.save(product);
+        // SAVE den sonra currency entity null gidiyo responseda. Boyle durumlarda napmak lzm. REST standartı headerda location diyo
         log.info("Product creation has ended. saved.getProductId: {}", saved.getProductId());
         return productConvertor.convert(saved);
     }
@@ -59,5 +60,6 @@ public class ProductService {
         Optional.of(productUpdateVo).map(ProductUpdateVo::getDescription).ifPresent(product::setDescription);
         Optional.of(productUpdateVo).map(ProductUpdateVo::isSold).ifPresent(product::setSold);
         Optional.of(productUpdateVo).map(ProductUpdateVo::getProductType).ifPresent(product::setProductType);
+        Optional.of(productUpdateVo).map(ProductUpdateVo::getPrice).ifPresent(product::setPrice);
     }
 }

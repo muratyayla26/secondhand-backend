@@ -47,11 +47,14 @@ CREATE TABLE IF NOT EXISTS product (
     description VARCHAR(200) NOT NULL,
     owner_id INT NOT NULL,
     product_type SMALLINT DEFAULT 0,
+    currency_id SMALLINT DEFAULT 1,
+    price NUMERIC(10, 2) NOT NULL,
     is_sold boolean DEFAULT FALSE NOT NULL,
     is_deleted boolean DEFAULT FALSE NOT NULL,
     created_at TIMESTAMP(0) NOT NULL,
     updated_at TIMESTAMP(0) DEFAULT NULL,
-    CONSTRAINT fk_account_id FOREIGN KEY (owner_id) REFERENCES account(account_id)
+    CONSTRAINT fk_account_id FOREIGN KEY (owner_id) REFERENCES account(account_id),
+    CONSTRAINT fk_currency_id FOREIGN KEY (currency_id) REFERENCES currency(currency_id)
     );
 
 CREATE TABLE IF NOT EXISTS profile (
@@ -112,3 +115,18 @@ CREATE VIEW profile_plain_view AS
     updated_at TIMESTAMP(0) DEFAULT NULL,
     CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(product_id)
 );
+
+CREATE TABLE IF NOT EXISTS currency (
+    currency_id SERIAL PRIMARY KEY,
+    currency_name VARCHAR(50) NOT NULL,
+    currency_symbol VARCHAR(5) NOT NULL,
+    currency_code VARCHAR(5) NOT NULL,
+    is_deleted boolean DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMP(0) NOT NULL,
+    updated_at TIMESTAMP(0) DEFAULT NULL,
+    UNIQUE (currency_name),
+    UNIQUE (currency_symbol)
+)
+INSERT INTO currency(currency_name, currency_symbol, currency_code, created_at) VALUES('Turkish lira', '₺', 'TRY', CURRENT_TIMESTAMP),
+INSERT INTO currency(currency_name, currency_symbol, currency_code, created_at) VALUES('United States Dollar', '$', 'USD', CURRENT_TIMESTAMP),
+INSERT INTO currency(currency_name, currency_symbol, currency_code, created_at) VALUES('Euro', '€', 'EUR', CURRENT_TIMESTAMP),
