@@ -28,10 +28,6 @@ public class Comment extends BaseEntity {
     @Column(name = "product_id")
     private Long productId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "product_id", insertable = false, updatable = false)
-//    private Product product;
-
     @OneToMany
     @SQLRestriction("is_deleted = false")
     @JoinColumn(name = "comment_id", referencedColumnName = "comment_id", insertable = false, updatable = false)

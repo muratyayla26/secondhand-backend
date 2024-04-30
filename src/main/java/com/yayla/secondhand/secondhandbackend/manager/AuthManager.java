@@ -1,7 +1,9 @@
 package com.yayla.secondhand.secondhandbackend.manager;
 
 import com.yayla.secondhand.secondhandbackend.exception.BusinessException;
+import com.yayla.secondhand.secondhandbackend.model.dto.auth.LoginDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshDto;
+import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshPlainDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
@@ -54,16 +56,19 @@ public class AuthManager {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-
         TokenRefreshDto tokenRefreshDto = refreshTokenService.createRefreshToken(userDetails.getAccountId());
-        LoginResponse.LoginData loginData = new LoginResponse.LoginData(accessToken,
-                tokenRefreshDto.getToken(),
-                BEARER_PREFIX,
-                userDetails.getAccountId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                roles);
-        return new LoginResponse(loginData);
+
+        LoginDto loginDto = LoginDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(tokenRefreshDto.getToken())
+                .tokenType(BEARER_PREFIX)
+                .accountId(userDetails.getAccountId())
+                .username(userDetails.getUsername())
+                .email(userDetails.getEmail())
+                .roles(roles).build();
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setLoginDto(loginDto);
+        return loginResponse;
     }
 
     public BaseResponse registerUser(SignupRequest signupRequest) {
@@ -105,10 +110,14 @@ public class AuthManager {
         TokenRefreshDto tokenRefreshDto = refreshTokenService.retrieve(requestRefreshToken);
         tokenRefreshDto = refreshTokenService.verifyExpiration(tokenRefreshDto);
         Account account = tokenRefreshDto.getAccount();
-
         String accessToken = jwtUtils.generateTokenFromEmail(account.getEmail());
-        TokenRefreshResponse.TokenData tokenData = new TokenRefreshResponse.TokenData(accessToken,
-                requestRefreshToken, BEARER_PREFIX);
-        return new TokenRefreshResponse(tokenData);
+
+        TokenRefreshPlainDto tokenRefreshPlainDto = TokenRefreshPlainDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(requestRefreshToken)
+                .tokenType(BEARER_PREFIX).build();
+        TokenRefreshResponse tokenRefreshResponse = new TokenRefreshResponse();
+        tokenRefreshResponse.setTokenRefreshPlainDto(tokenRefreshPlainDto);
+        return tokenRefreshResponse;
     }
 }

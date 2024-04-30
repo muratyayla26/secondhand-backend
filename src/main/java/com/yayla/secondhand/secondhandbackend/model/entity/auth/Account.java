@@ -31,7 +31,6 @@ public class Account extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    // TODO account_account_role base entity extend edememis oluyor
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_account_role",
             joinColumns = @JoinColumn(name = "account_id"),

@@ -26,9 +26,6 @@ public class CommentAnswer extends BaseEntity {
 
     @Column(name = "product_id")
     private Long productId;
-//    @ManyToOne
-//    @JoinColumn(name = "comment_id", insertable = false, updatable = false)
-//    private Comment comment;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "account_id", insertable = false, updatable = false)

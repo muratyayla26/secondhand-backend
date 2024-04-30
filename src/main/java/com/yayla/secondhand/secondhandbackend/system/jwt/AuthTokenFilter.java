@@ -39,7 +39,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            // TODO mesela jwtUtils.validateJwtToken dan MalformedJwtException gelince onu burda logluyor, ama genel 401 dönüyor AuthEntryPointJwt'dan. Burdaki e.getMessageyi dönmüyor
+            // TODO Error message fix, return specific error message
             log.error("Cannot set user authentication: {}", e.getMessage());
             throw new BadCredentialsException(e.getMessage());
         }

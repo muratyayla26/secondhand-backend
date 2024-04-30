@@ -62,7 +62,6 @@ public class ProductManager {
         return mapResponse(productDto);
     }
 
-    // TODO product silme yoruma bağlı kaldı. Business açısından saçma duruyo. Napmak lzm?
     @Transactional
     public BaseResponse deleteProduct(Long productId) {
         log.info("Product delete has started. productId: {}", productId);
