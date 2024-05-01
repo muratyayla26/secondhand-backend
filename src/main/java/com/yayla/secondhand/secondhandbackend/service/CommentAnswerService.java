@@ -19,21 +19,21 @@ public class CommentAnswerService {
     private final CommentAnswerRepository commentAnswerRepository;
     private final CommentAnswerConvertor commentAnswerConvertor;
 
-    public void createCommentAnswer(CommentAnswerCreateVo commentAnswerCreateVo){
+    public void createCommentAnswer(CommentAnswerCreateVo commentAnswerCreateVo) {
         log.info("Comment answer creation has started. commentCreateVo: {}", commentAnswerCreateVo.toString());
         CommentAnswer commentAnswer = commentAnswerConvertor.convert(commentAnswerCreateVo);
         CommentAnswer saved = commentAnswerRepository.save(commentAnswer);
         log.info("Comment answer has been saved. commentAnswer: {}", saved.getCommentAnswerId());
     }
 
-    public CommentAnswerDto fetchCommentAnswer(Long commentAnswerId){
+    public CommentAnswerDto fetchCommentAnswer(Long commentAnswerId) {
         log.info("Comment answer fetch has started. commentAnswerId: {}", commentAnswerId);
         CommentAnswer commentAnswer = commentAnswerRepository.findByCommentAnswerIdAndIsDeletedIsFalse(commentAnswerId).orElseThrow(NotFoundException::new);
         log.info("Comment answer fetch has ended. commentAnswerId: {}", commentAnswerId);
         return commentAnswerConvertor.convert(commentAnswer);
     }
 
-    public void deleteCommentAnswer(Long commentAnswerId){
+    public void deleteCommentAnswer(Long commentAnswerId) {
         log.info("Comment answer delete has started. commentAnswerId: {}", commentAnswerId);
         CommentAnswer commentAnswer = commentAnswerRepository.findByCommentAnswerIdAndIsDeletedIsFalse(commentAnswerId).orElseThrow(NotFoundException::new);
         commentAnswer.setDeleted(true);
@@ -42,14 +42,14 @@ public class CommentAnswerService {
     }
 
     @Transactional
-    public void deleteProductsCommentsAnswers(Long productId){
+    public void deleteProductsCommentsAnswers(Long productId) {
         log.info("Delete products comments answers has started. productId: {}", productId);
         commentAnswerRepository.removeAllCommentsAnswersByProductId(productId);
         log.info("Delete products comments answers has ended. productId: {}", productId);
     }
 
     @Transactional
-    public void deleteCommentsCommentsAnswers(Long commentId){
+    public void deleteCommentsCommentsAnswers(Long commentId) {
         log.info("Delete comments comments answers has started. commentId: {}", commentId);
         commentAnswerRepository.removeAllCommentsAnswersByCommentId(commentId);
         log.info("Delete comments comments answers has ended. commentId: {}", commentId);

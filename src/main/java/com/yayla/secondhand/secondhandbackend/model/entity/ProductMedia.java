@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "product_media")
-public class ProductMedia extends BaseEntity{
+public class ProductMedia extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 public interface CommentConvertor {
 
     CommentCreateVo convert(CommentCreateRequest commentCreateRequest, Long ownerId);
+
     Comment convert(CommentCreateVo commentCreateVo);
+
     CommentDto convert(Comment comment);
 }

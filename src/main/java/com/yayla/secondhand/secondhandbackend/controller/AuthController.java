@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthManager authManager;
-    // TODO change password
-    // TODO linter
-    // TODO db history changeset
+
+    // TODO DB history changeset
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -34,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh-token")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public TokenRefreshResponse refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
         return authManager.refreshToken(request);
     }

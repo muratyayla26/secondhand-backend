@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class CommentAnswerDto extends BaseDto{
+public class CommentAnswerDto extends BaseDto {
 
     private Long commentAnswerId;
 

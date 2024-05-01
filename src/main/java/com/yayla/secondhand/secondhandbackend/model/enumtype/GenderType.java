@@ -14,5 +14,7 @@ public enum GenderType {
     private final int value;
 
     @JsonValue
-    public int getValue() {return value;}
+    public int getValue() {
+        return value;
+    }
 }

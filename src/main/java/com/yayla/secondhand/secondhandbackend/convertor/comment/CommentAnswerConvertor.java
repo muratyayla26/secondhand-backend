@@ -9,7 +9,9 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CommentAnswerConvertor {
     CommentAnswerCreateVo convert(CommentAnswerCreateRequest createRequest, Long ownerId, Long productId);
+
     CommentAnswer convert(CommentAnswerCreateVo commentAnswerCreateVo);
+
     CommentAnswerDto convert(CommentAnswer commentAnswer);
 }
 

@@ -28,7 +28,7 @@ public class CommentManager {
     public BaseResponse createComment(CommentCreateRequest commentCreateRequest) {
         log.info("Comment creation has started : {}", commentCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
-        CommentCreateVo commentCreateVo =  commentConvertor.convert(commentCreateRequest, currentAccountId);
+        CommentCreateVo commentCreateVo = commentConvertor.convert(commentCreateRequest, currentAccountId);
         commentService.createComment(commentCreateVo);
         return new BaseResponse();
     }
@@ -45,7 +45,7 @@ public class CommentManager {
 
     private void validateAccess(Long commentId, Long currentAccountId) {
         CommentDto commentDto = commentService.fetchComment(commentId);
-        if(!commentDto.getOwnerId().equals(currentAccountId)) {
+        if (!commentDto.getOwnerId().equals(currentAccountId)) {
             throw new AccessDeniedException("You do not have access to this comment");
         }
     }

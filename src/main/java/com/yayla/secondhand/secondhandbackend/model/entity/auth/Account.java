@@ -11,15 +11,15 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name= "account",
-uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "account",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        })
 public class Account extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "account_id")
+    @Column(name = "account_id")
     private Long accountId;
 
     @Column(name = "username")

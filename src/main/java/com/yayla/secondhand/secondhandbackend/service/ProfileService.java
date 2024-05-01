@@ -53,7 +53,7 @@ public class ProfileService {
 
     @Transactional
     public void changeProfileImage(ProfileImageVo profileImageVo) {
-        log.info("Profile image has started. profileImageVo: {}", profileImageVo.toString());
+        log.info("Profile image upload has started. profileImageVo: {}", profileImageVo.toString());
         Profile profile = profileRepository.findByAccountId(profileImageVo.getAccountId()).orElseThrow(NotFoundException::new);
         UUID currImageKey = profile.getProfileImageKey();
         try {
@@ -61,7 +61,7 @@ public class ProfileService {
             profile.setProfileImageKey(profileImageVo.getFileKey());
             profileRepository.save(profile);
             deleteProfileImageIfExists(currImageKey);
-            log.info("Profile image has ended. profileImageVo: {}", profileImageVo.toString());
+            log.info("Profile image upload has ended. profileImageVo: {}", profileImageVo.toString());
         } catch (Exception exception) {
             log.error(exception.getMessage(), exception);
             throw new BusinessException("Failed to upload file");

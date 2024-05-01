@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @RequestMapping(path = "/api/v1/file-test")
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class S3Controller {
         var content = s3Object.getObjectContent();
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\""+fileName+"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + fileName + "\"")
                 .body(new InputStreamResource(content));
     }
 }

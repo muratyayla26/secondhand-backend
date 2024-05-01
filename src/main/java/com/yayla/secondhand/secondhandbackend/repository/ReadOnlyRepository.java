@@ -11,8 +11,12 @@ import java.util.Optional;
 @NoRepositoryBean
 public interface ReadOnlyRepository<T, ID> extends Repository<T, ID> {
     List<T> findAll();
+
     List<T> findAll(Sort sort);
+
     List<T> findAll(Pageable pageable);
+
     Optional<T> findById(ID id);
+
     long count();
 }

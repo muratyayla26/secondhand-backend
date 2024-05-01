@@ -53,7 +53,7 @@ public class ProductManager {
         return new BaseResponse();
     }
 
-    public ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest){
+    public ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest) {
         log.info("Product update has started. productUpdateRequest : {}", productUpdateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
         validateAccess(productUpdateRequest.getProductId(), currentAccountId);
@@ -76,7 +76,7 @@ public class ProductManager {
     }
 
     public BaseResponse uploadProductImages(Long productId, MultipartFile[] files) {
-        if(files == null || files.length == 0) {
+        if (files == null || files.length == 0) {
             throw new BusinessException("File is null or empty");
         }
         log.info("Product's image upload has started. productId : {}", productId);
@@ -86,7 +86,7 @@ public class ProductManager {
         List<String> invalidImages = new ArrayList<>();
         List<ProductImageVo> productImageVos = new ArrayList<>();
         for (MultipartFile file : files) {
-            if(MediaHelper.validateImageType(file, true)) {
+            if (MediaHelper.validateImageType(file, true)) {
                 UUID fileKey = MediaHelper.generateImageKey();
                 String bucketPath = MediaHelper.generateBucketPath(MediaHelper.PRODUCT_BUCKET_FOLDER, fileKey);
                 productImageVos.add(ProductImageVo.builder()
@@ -101,11 +101,12 @@ public class ProductManager {
         List<String> unloadedImages = productMediaService.uploadProductImages(productId, productImageVos);
         invalidImages.addAll(unloadedImages);
         BaseResponse baseResponse = new BaseResponse();
-        if(!invalidImages.isEmpty()) {
+        if (!invalidImages.isEmpty()) {
             baseResponse.setErrorMessage(String.join(", ", invalidImages));
         }
         return baseResponse;
     }
+
     public BaseResponse deleteProductImages(Long productId, ProductImagesDeleteRequest productImagesDeleteRequest) {
         log.info("Product's image delete has started. productId : {}", productId);
         Long currentAccountId = sessionInfoService.currentAccountId();
@@ -115,7 +116,7 @@ public class ProductManager {
         return new BaseResponse();
     }
 
-    private ProductResponse mapResponse(ProductDto productDto){
+    private ProductResponse mapResponse(ProductDto productDto) {
         ProductResponse productResponse = new ProductResponse();
         productResponse.setProductDto(productDto);
         return productResponse;
@@ -123,11 +124,10 @@ public class ProductManager {
 
     private void validateAccess(Long productId, Long currentAccountId) {
         ProductDto productDto = productService.fetchProduct(productId);
-        if(!productDto.getOwnerId().equals(currentAccountId)) {
+        if (!productDto.getOwnerId().equals(currentAccountId)) {
             throw new AccessDeniedException("You do not have access to this product");
         }
     }
-
 
 
 }

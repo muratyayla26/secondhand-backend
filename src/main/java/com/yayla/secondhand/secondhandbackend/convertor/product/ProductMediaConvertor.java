@@ -13,7 +13,9 @@ public class ProductMediaConvertor {
         productMedia.setMediaKey(productImageVo.getFileKey());
         productMedia.setProductId(productId);
         return productMedia;
-    };
+    }
+
+    ;
 
     public ProductImagesDeleteVo convert(ProductImagesDeleteRequest productImagesDeleteRequest) {
         ProductImagesDeleteVo productImagesDeleteVo = new ProductImagesDeleteVo();

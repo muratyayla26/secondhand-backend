@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class ProductMediaDto  extends BaseDto{
+public class ProductMediaDto extends BaseDto {
     private Long mediaId;
 
     private UUID mediaKey;

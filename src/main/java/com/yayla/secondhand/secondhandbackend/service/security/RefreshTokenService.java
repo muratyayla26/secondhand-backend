@@ -43,6 +43,7 @@ public class RefreshTokenService {
 
     @Transactional
     public TokenRefreshDto createRefreshTokenAndRevoke(Long accountId, RefreshToken oldRefreshToken) {
+        log.info("Refresh token creation and revoke process has started, accountId : {}", accountId);
         this.revokeRefreshToken(oldRefreshToken);
         return this.createRefreshToken(accountId);
     }

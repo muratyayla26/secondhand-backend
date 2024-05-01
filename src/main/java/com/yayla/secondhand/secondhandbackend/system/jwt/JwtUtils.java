@@ -67,11 +67,11 @@ public class JwtUtils {
             return true;
         } catch (MalformedJwtException e) {
             log.error("Invalid JWT token", e);
-        } catch(ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             log.error("Expired JWT token", e);
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT token", e);
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("JWT claims string is empty", e);
         }
         return false;

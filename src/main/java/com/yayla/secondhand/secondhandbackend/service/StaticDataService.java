@@ -24,11 +24,11 @@ public class StaticDataService {
     private final CityConvertor cityConvertor;
     private final DistrictConvertor districtConvertor;
 
-    public CityDto fetchCity(Integer cityId){
+    public CityDto fetchCity(Integer cityId) {
         return cityRepository.findByCityIdAndIsDeletedIsFalse(cityId).map(cityConvertor::convert).orElseThrow(NotFoundException::new);
     }
 
-    public DistrictDto fetchDistrict(Integer districtId){
+    public DistrictDto fetchDistrict(Integer districtId) {
         return districtRepository.findByDistrictIdAndIsDeletedIsFalse(districtId).map(districtConvertor::convert).orElseThrow(NotFoundException::new);
     }
 

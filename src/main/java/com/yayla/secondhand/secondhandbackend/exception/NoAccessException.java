@@ -6,7 +6,7 @@ public class NoAccessException extends RuntimeException {
         super("You're not authorized for this action.");
     }
 
-    public NoAccessException(String message){
+    public NoAccessException(String message) {
         super(message);
     }
 }

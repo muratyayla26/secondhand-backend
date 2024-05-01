@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccountRoleService {
     private final AccountRoleRepository accountRoleRepository;
+
     public AccountRole retrieve(RoleType roleType) {
         return accountRoleRepository.findByRoleName(roleType).orElseThrow(NotFoundException::new);
     }

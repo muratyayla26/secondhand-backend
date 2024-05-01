@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(path ="/api/v1")
+@RequestMapping(path = "/api/v1")
 @RequiredArgsConstructor
 public class StaticDataController {
 

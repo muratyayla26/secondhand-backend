@@ -17,11 +17,11 @@ public class SessionInfoService {
 
     public Long currentAccountId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || !authentication.isAuthenticated()) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             throw new AuthGeneralException("Unauthorized access. Please login first.");
         }
 
-        if(authentication.getPrincipal() instanceof UserDetails) {
+        if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             return userDetails.getAccountId();
         } else {

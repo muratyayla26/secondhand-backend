@@ -15,8 +15,12 @@ import java.util.UUID;
 @Mapper(componentModel = "spring")
 public interface ProfileConvertor {
     ProfileCreateVo convert(ProfileCreateRequest profileCreateRequest, Long accountId);
+
     ProfileDto convert(Profile profile);
+
     Profile convert(ProfileCreateVo profileCreateVo);
+
     ProfileUpdateVo convert(ProfileUpdateRequest profileUpdateRequest, Long accountId);
-    ProfileImageVo convert(Long accountId, MultipartFile file, UUID fileKey, String bucketPath );
+
+    ProfileImageVo convert(Long accountId, MultipartFile file, UUID fileKey, String bucketPath);
 }

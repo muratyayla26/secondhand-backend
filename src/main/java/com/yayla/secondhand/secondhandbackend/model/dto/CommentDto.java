@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class CommentDto extends BaseDto{
+public class CommentDto extends BaseDto {
 
     private Long commentId;
 

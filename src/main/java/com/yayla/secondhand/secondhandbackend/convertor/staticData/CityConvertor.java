@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CityConvertor {
     CityDto convert(City city);
+
     City convert(CityDto cityDto);
 
 }

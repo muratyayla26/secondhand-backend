@@ -48,6 +48,7 @@ public class AuthManager {
     private final PasswordEncoder passwordEncoder;
 
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
+        log.info("Login process has started, account email : {}", loginRequest.getEmail());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -69,10 +70,12 @@ public class AuthManager {
                 .roles(roles).build();
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setLoginDto(loginDto);
+        log.info("Login process has ended, account email : {}", loginRequest.getEmail());
         return loginResponse;
     }
 
     public BaseResponse registerUser(SignupRequest signupRequest) {
+        log.info("Register process has started, account email : {}", signupRequest.getEmail());
         if (accountService.checkUserExists(signupRequest.getEmail())) {
             throw new BusinessException("User already exists with this email address.");
         }
@@ -106,8 +109,8 @@ public class AuthManager {
         return new BaseResponse();
     }
 
-    // TODO account login multiple time refresh token id check
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
+        log.info("Refresh token process has started.");
         String requestRefreshToken = request.getRefreshToken();
         RefreshToken refreshToken = refreshTokenService.retrieve(requestRefreshToken);
         refreshToken = refreshTokenService.verifyExpiration(refreshToken);
@@ -121,6 +124,7 @@ public class AuthManager {
                 .tokenType(BEARER_PREFIX).build();
         TokenRefreshResponse tokenRefreshResponse = new TokenRefreshResponse();
         tokenRefreshResponse.setTokenRefreshPlainDto(tokenRefreshPlainDto);
+        log.info("Refresh token process has ended, accountId : {}", account.getAccountId());
         return tokenRefreshResponse;
     }
 }

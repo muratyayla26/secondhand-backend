@@ -10,7 +10,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class ProfileDto extends BaseDto{
+public class ProfileDto extends BaseDto {
 
     private Long profileId;
 

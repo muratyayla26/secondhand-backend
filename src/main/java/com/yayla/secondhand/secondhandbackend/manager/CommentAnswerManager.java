@@ -43,7 +43,7 @@ public class CommentAnswerManager {
 
     private void validateAccess(Long commentAnswerId, Long currentAccountId) {
         CommentAnswerDto commentAnswerDto = commentAnswerService.fetchCommentAnswer(commentAnswerId);
-        if(!commentAnswerDto.getOwnerId().equals(currentAccountId)) {
+        if (!commentAnswerDto.getOwnerId().equals(currentAccountId)) {
             throw new AccessDeniedException("You do not have access to this comment answer");
         }
     }

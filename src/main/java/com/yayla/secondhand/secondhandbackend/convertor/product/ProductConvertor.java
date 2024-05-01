@@ -12,7 +12,10 @@ import org.mapstruct.Mapper;
 public interface ProductConvertor {
 
     ProductDto convert(Product product);
+
     ProductCreateVo convert(ProductCreateRequest productCreateRequest, Long ownerId);
+
     ProductUpdateVo convert(ProductUpdateRequest productUpdateRequest);
+
     Product convert(ProductCreateVo productCreateVo);
 }

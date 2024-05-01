@@ -104,11 +104,8 @@ public class ProfileManager {
         return profileResponse;
     }
 
-    record CityAndDistrictDto(CityDto cityDto, DistrictDto districtDto) {
-    }
-
     public BaseResponse uploadProfileImage(MultipartFile file) {
-        log.info("Profile image has started.");
+        log.info("Profile image upload has started.");
         MediaHelper.validateImageType(file);
         UUID fileKey = MediaHelper.generateImageKey();
         String bucketPath = MediaHelper.generateBucketPath(MediaHelper.PROFILE_BUCKET_FOLDER, fileKey);
@@ -116,5 +113,8 @@ public class ProfileManager {
         ProfileImageVo profileImageVo = profileConvertor.convert(currentAccountId, file, fileKey, bucketPath);
         profileService.changeProfileImage(profileImageVo);
         return new BaseResponse();
+    }
+
+    record CityAndDistrictDto(CityDto cityDto, DistrictDto districtDto) {
     }
 }

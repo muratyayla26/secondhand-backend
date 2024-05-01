@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface TokenRefreshConvertor {
     RefreshToken convert(TokenRefreshDto tokenRefreshDto);
+
     TokenRefreshDto convert(RefreshToken refreshToken);
 }
