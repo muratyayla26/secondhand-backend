@@ -24,15 +24,26 @@ public class JwtUtils {
     @Value("${yayla.app.jwtExpirationMs}")
     private String jwtExpirationMs;
 
+    @Value("${yayla.app.jwtRefreshExpirationMs}")
+    private String refreshTokenExpirationMs;
+
     public String generateJwtToken(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return generateTokenFromEmail(userDetails.getEmail());
+        return generateTokenFromEmail(userDetails.getEmail(), jwtExpirationMs);
     }
 
-    public String generateTokenFromEmail(String email) {
-        long jwtExpirationMsLong = Long.parseLong(jwtExpirationMs);
+    public String generateJwtToken(String email) {
+        return generateTokenFromEmail(email, jwtExpirationMs);
+    }
+
+    public String generateRefreshToken(String email) {
+        return generateTokenFromEmail(email, refreshTokenExpirationMs);
+    }
+
+    public String generateTokenFromEmail(String email, String expirationMs) {
+        long expirationMsLong = Long.parseLong(expirationMs);
         Instant issuedAt = Instant.now();
-        Instant expiration = issuedAt.plus(Duration.ofMillis(jwtExpirationMsLong));
+        Instant expiration = issuedAt.plus(Duration.ofMillis(expirationMsLong));
 
         return Jwts.builder().subject(email)
                 .issuedAt(Date.from(issuedAt))
@@ -55,13 +66,14 @@ public class JwtUtils {
             Jwts.parser().verifyWith(key()).build().parseSignedClaims(authToken).getPayload();
             return true;
         } catch (MalformedJwtException e) {
-            throw new MalformedJwtException("Invalid JWT token: " + e.getMessage());
+            log.error("Invalid JWT token", e);
         } catch(ExpiredJwtException e){
-            throw new ExpiredJwtException(e.getHeader(), e.getClaims(), "JWT token is expired: " + e.getMessage());
+            log.error("Expired JWT token", e);
         } catch (UnsupportedJwtException e) {
-            throw new UnsupportedJwtException("JWT token is unsupported: " + e.getMessage());
+            log.error("Unsupported JWT token", e);
         } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException("JWT claims string is empty: " + e.getMessage());
+            log.error("JWT claims string is empty", e);
         }
+        return false;
     }
 }

@@ -23,13 +23,13 @@ public class ProfileController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ProfileResponse fetchProfile(){
+    public ProfileResponse fetchProfile() {
         return profileManager.fetchProfile();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProfileResponse createProfile(@Valid @RequestBody ProfileCreateRequest profileCreateRequest){
+    public BaseResponse createProfile(@Valid @RequestBody ProfileCreateRequest profileCreateRequest) {
         return profileManager.createProfile(profileCreateRequest);
     }
 
@@ -41,7 +41,7 @@ public class ProfileController {
 
     @PostMapping(value = "/upload-image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public BaseResponse uploadProfileImage(@RequestParam("file") MultipartFile file) throws IOException {
+    public BaseResponse uploadProfileImage(@RequestParam("file") MultipartFile file) {
         return profileManager.uploadProfileImage(file);
     }
 }

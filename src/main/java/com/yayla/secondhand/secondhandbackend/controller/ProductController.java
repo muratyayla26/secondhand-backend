@@ -29,7 +29,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductResponse createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
+    public BaseResponse createProduct(@Valid @RequestBody ProductCreateRequest productCreateRequest) {
         return productManager.createProduct(productCreateRequest);
     }
 
@@ -56,6 +56,7 @@ public class ProductController {
     }
 
     @PostMapping("/delete-images/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public BaseResponse deleteProductImages(@PathVariable Long productId, @Valid @RequestBody ProductImagesDeleteRequest productImagesDeleteRequest) {
         return productManager.deleteProductImages(productId, productImagesDeleteRequest);
     }

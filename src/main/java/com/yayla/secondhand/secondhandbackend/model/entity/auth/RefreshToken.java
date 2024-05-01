@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 
 @Getter
 @Setter
@@ -17,14 +16,17 @@ public class RefreshToken extends BaseEntity {
     @Column(name = "refresh_token_id")
     private long refreshTokenId;
 
+    @Column(name = "account_id")
+    private Long accountId;
+
     @OneToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
     private Account account;
 
     @Column(name = "token", nullable = false, unique = true)
     private String token;
 
-    @Column(name = "expiry_date", nullable = false)
-    private Instant expiryDate;
+    @Column(name = "is_revoked")
+    private boolean isRevoked;
 
 }

@@ -29,13 +29,11 @@ public class ProductService {
         return productConvertor.convert(product);
     }
 
-    public ProductDto createProduct(ProductCreateVo productCreateVo) {
+    public void createProduct(ProductCreateVo productCreateVo) {
         log.info("Product creation has started. productCreateVo: {}", productCreateVo.toString());
         Product product = productConvertor.convert(productCreateVo);
         Product saved = productRepository.save(product);
-        // SAVE den sonra currency entity null gidiyo responseda. Boyle durumlarda napmak lzm. REST standartı headerda location diyo
         log.info("Product creation has ended. saved.getProductId: {}", saved.getProductId());
-        return productConvertor.convert(saved);
     }
 
     public ProductDto updateProduct(ProductUpdateVo productUpdateVo) {

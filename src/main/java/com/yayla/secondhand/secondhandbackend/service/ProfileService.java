@@ -35,11 +35,11 @@ public class ProfileService {
         return profileRepository.findByAccountId(accountId).map(profileConvertor::convert).orElseThrow(NotFoundException::new);
     }
 
-    public ProfileDto createProfile(ProfileCreateVo profileCreateVo) {
+    public void createProfile(ProfileCreateVo profileCreateVo) {
         log.info("Profile creation has started. productCreateVo: {}", profileCreateVo.toString());
         Profile profile = profileConvertor.convert(profileCreateVo);
         Profile saved = profileRepository.save(profile);
-        return profileConvertor.convert(saved);
+        log.info("Profile creation has ended. profileId: {}", saved.getProfileId());
     }
 
     public ProfileDto updateProfile(ProfileUpdateVo profileUpdateVo) {

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthManager authManager;
-
+    // TODO change password
+    // TODO linter
+    // TODO db history changeset
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

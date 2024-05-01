@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.Instant;
-
 @Getter
 @Setter
 @ToString(callSuper = true)
 public class TokenRefreshDto extends BaseDto {
     private long refreshTokenId;
+    private Long accountId;
     private Account account;
     private String token;
-    private Instant expiryDate;
-
+    private boolean isRevoked;
 }

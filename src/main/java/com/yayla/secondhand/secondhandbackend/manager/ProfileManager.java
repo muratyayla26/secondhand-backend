@@ -46,25 +46,22 @@ public class ProfileManager {
     }
 
 
-    public ProfileResponse createProfile(ProfileCreateRequest profileCreateRequest) {
+    public BaseResponse createProfile(ProfileCreateRequest profileCreateRequest) {
         log.info("Profile creation has started. profileCreateRequest : {}", profileCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
         if (profileService.checkProfileExists(currentAccountId)) {
             throw new BusinessException("Profile already exists");
         }
 
-        CityAndDistrictDto cityAndDistrictDto = new CityAndDistrictDto(null, null);
         if (profileCreateRequest.getCityId() != null && profileCreateRequest.getCityId() > 0) {
-            cityAndDistrictDto = validateCityAndDistrict(profileCreateRequest.getCityId(), profileCreateRequest.getDistrictId());
+            validateCityAndDistrict(profileCreateRequest.getCityId(), profileCreateRequest.getDistrictId());
         } else {
             profileCreateRequest.setDistrictId(null);
         }
 
         ProfileCreateVo profileCreateVo = profileConvertor.convert(profileCreateRequest, currentAccountId);
-        ProfileDto profileDto = profileService.createProfile(profileCreateVo);
-        profileDto.setCity(cityAndDistrictDto.cityDto());
-        profileDto.setDistrict(cityAndDistrictDto.districtDto());
-        return mapResponse(profileDto);
+        profileService.createProfile(profileCreateVo);
+        return new BaseResponse();
     }
 
     public ProfileResponse updateProfile(ProfileUpdateRequest profileUpdateRequest) {

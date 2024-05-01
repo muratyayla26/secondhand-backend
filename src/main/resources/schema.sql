@@ -32,10 +32,10 @@ INSERT INTO account_role(role_name) VALUES('ROLE_ADMIN');
 
 CREATE TABLE IF NOT EXISTS refresh_token (
     refresh_token_id SERIAL PRIMARY KEY,
-    token VARCHAR(36) NOT NULL,
-    expiry_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    token VARCHAR(255) NOT NULL,
     account_id BIGINT NOT NULL,
     is_deleted boolean DEFAULT FALSE NOT NULL,
+    is_revoked boolean DEFAULT FALSE NOT NULL,
     created_at TIMESTAMP(0) NOT NULL,
     updated_at TIMESTAMP(0) DEFAULT NULL,
     CONSTRAINT fk_account_id FOREIGN KEY (account_id) REFERENCES account(account_id)

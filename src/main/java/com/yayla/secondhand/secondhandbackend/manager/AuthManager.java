@@ -6,6 +6,7 @@ import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshPlainDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.LoginRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.SignupRequest;
@@ -105,16 +106,18 @@ public class AuthManager {
         return new BaseResponse();
     }
 
+    // TODO account login multiple time refresh token id check
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
         String requestRefreshToken = request.getRefreshToken();
-        TokenRefreshDto tokenRefreshDto = refreshTokenService.retrieve(requestRefreshToken);
-        tokenRefreshDto = refreshTokenService.verifyExpiration(tokenRefreshDto);
-        Account account = tokenRefreshDto.getAccount();
-        String accessToken = jwtUtils.generateTokenFromEmail(account.getEmail());
+        RefreshToken refreshToken = refreshTokenService.retrieve(requestRefreshToken);
+        refreshToken = refreshTokenService.verifyExpiration(refreshToken);
+        Account account = refreshToken.getAccount();
+        String accessToken = jwtUtils.generateJwtToken(account.getEmail());
+        TokenRefreshDto newRefreshToken = refreshTokenService.createRefreshTokenAndRevoke(account.getAccountId(), refreshToken);
 
         TokenRefreshPlainDto tokenRefreshPlainDto = TokenRefreshPlainDto.builder()
                 .accessToken(accessToken)
-                .refreshToken(requestRefreshToken)
+                .refreshToken(newRefreshToken.getToken())
                 .tokenType(BEARER_PREFIX).build();
         TokenRefreshResponse tokenRefreshResponse = new TokenRefreshResponse();
         tokenRefreshResponse.setTokenRefreshPlainDto(tokenRefreshPlainDto);

@@ -45,12 +45,12 @@ public class ProductManager {
         return mapResponse(productDto);
     }
 
-    public ProductResponse createProduct(ProductCreateRequest productCreateRequest) {
+    public BaseResponse createProduct(ProductCreateRequest productCreateRequest) {
         log.info("Product creation has started. productCreateRequest : {}", productCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
         ProductCreateVo productCreateVo = productConvertor.convert(productCreateRequest, currentAccountId);
-        ProductDto productDto = productService.createProduct(productCreateVo);
-        return mapResponse(productDto);
+        productService.createProduct(productCreateVo);
+        return new BaseResponse();
     }
 
     public ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest){
