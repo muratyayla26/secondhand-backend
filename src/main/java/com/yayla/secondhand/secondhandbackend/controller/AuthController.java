@@ -19,7 +19,6 @@ public class AuthController {
 
     private final AuthManager authManager;
 
-    // TODO DB history changeset
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
