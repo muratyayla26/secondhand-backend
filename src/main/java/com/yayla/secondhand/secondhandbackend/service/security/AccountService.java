@@ -16,7 +16,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     public Boolean checkUserExists(String email) {
-        return accountRepository.existsByEmail(email);
+        return accountRepository.existsByEmailAndIsDeletedIsFalse(email);
     }
 
     public void createUser(Account account) {
@@ -26,7 +26,7 @@ public class AccountService {
     }
 
     public Account retrieve(Long accountId) {
-        return accountRepository.findById(accountId).orElseThrow(
+        return accountRepository.findByAccountIdAndIsDeletedIsFalse(accountId).orElseThrow(
                 () -> new AuthGeneralException("Account not found"));
     }
 

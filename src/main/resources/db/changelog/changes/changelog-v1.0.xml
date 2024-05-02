@@ -4,4 +4,8 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="secondhand-v1.0-drop-unique-email-account" author="murat.yayla">
+        <dropUniqueConstraint tableName="account" constraintName="account_email_key"
+                              columnNames="email"/>
+    </changeSet>
 </databaseChangeLog>
