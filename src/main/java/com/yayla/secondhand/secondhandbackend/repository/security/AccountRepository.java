@@ -7,9 +7,11 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    Optional<Account> findByAccountIdAndIsDeletedIsFalse(Long accountId);
+    Optional<Account> findByAccountIdAndIsDeletedIsFalseAndIsEmailConfirmedIsTrue(Long accountId);
 
-    Optional<Account> findByEmailAndIsDeletedIsFalse(String email);
+    Optional<Account> findByEmailAndIsDeletedIsFalseAndIsEmailConfirmedIsTrue(String email);
 
-    Boolean existsByEmailAndIsDeletedIsFalse(String email);
+    Boolean existsByEmailAndIsDeletedIsFalseAndIsEmailConfirmedIsTrue(String email);
+
+    Optional<Account> findByEmailAndIsDeletedIsFalseAndIsEmailConfirmedIsFalse(String email);
 }

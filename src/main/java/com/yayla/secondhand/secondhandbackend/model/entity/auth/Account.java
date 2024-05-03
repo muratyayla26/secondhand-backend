@@ -11,10 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "account",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "email")
-        })
+@Table(name = "account")
 public class Account extends BaseEntity {
 
     @Id
@@ -22,14 +19,17 @@ public class Account extends BaseEntity {
     @Column(name = "account_id")
     private Long accountId;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "is_email_confirmed")
+    private Boolean isEmailConfirmed;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_account_role",
@@ -37,10 +37,11 @@ public class Account extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<AccountRole> roles = new HashSet<>();
 
-    public Account(String username, String email, String password) {
+    public Account(String username, String email, String password, Boolean isEmailConfirmed) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.isEmailConfirmed = isEmailConfirmed;
     }
 }
 

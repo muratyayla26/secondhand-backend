@@ -26,6 +26,7 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+    private Boolean isEmailConfirmed;
 
     public static UserDetailsImpl build(Account account) {
         List<GrantedAuthority> authorities = account.getRoles().stream()
@@ -37,7 +38,8 @@ public class UserDetailsImpl implements UserDetails {
                 account.getUsername(),
                 account.getEmail(),
                 account.getPassword(),
-                authorities
+                authorities,
+                account.getIsEmailConfirmed()
         );
     }
 

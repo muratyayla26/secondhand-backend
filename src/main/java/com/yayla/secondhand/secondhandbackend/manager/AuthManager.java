@@ -1,23 +1,25 @@
 package com.yayla.secondhand.secondhandbackend.manager;
 
+import com.yayla.secondhand.secondhandbackend.convertor.auth.AccountConvertor;
 import com.yayla.secondhand.secondhandbackend.exception.BusinessException;
+import com.yayla.secondhand.secondhandbackend.model.dto.auth.AccountDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.auth.LoginDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshDto;
 import com.yayla.secondhand.secondhandbackend.model.dto.auth.TokenRefreshPlainDto;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.Account;
+import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountConfirmationToken;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
+import com.yayla.secondhand.secondhandbackend.model.request.auth.ChangePasswordRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.LoginRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.SignupRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.TokenRefreshRequest;
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.auth.LoginResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.auth.TokenRefreshResponse;
-import com.yayla.secondhand.secondhandbackend.service.security.AccountRoleService;
-import com.yayla.secondhand.secondhandbackend.service.security.AccountService;
-import com.yayla.secondhand.secondhandbackend.service.security.RefreshTokenService;
-import com.yayla.secondhand.secondhandbackend.service.security.UserDetailsImpl;
+import com.yayla.secondhand.secondhandbackend.model.vo.auth.RegisterConfirmationVo;
+import com.yayla.secondhand.secondhandbackend.service.security.*;
 import com.yayla.secondhand.secondhandbackend.system.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +32,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -46,9 +50,12 @@ public class AuthManager {
     private final AccountService accountService;
     private final AccountRoleService accountRoleService;
     private final PasswordEncoder passwordEncoder;
+    private final AccountConfirmationService accountConfirmationService;
+    private final AccountConvertor accountConvertor;
 
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
         log.info("Login process has started, account email : {}", loginRequest.getEmail());
+        // TODO confirmation check
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -80,9 +87,17 @@ public class AuthManager {
             throw new BusinessException("User already exists with this email address.");
         }
 
+        AccountDto waitingAccount = accountService.findUserWaitsEmailConfirmation(signupRequest.getEmail());
+        if (waitingAccount != null) {
+            RegisterConfirmationVo registerConfirmationVo = accountConvertor.convert(waitingAccount);
+            accountConfirmationService.initializeConfirmation(registerConfirmationVo);
+            return new BaseResponse();
+        }
+
         Account account = new Account(signupRequest.getUsername(),
                 signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()));
+                passwordEncoder.encode(signupRequest.getPassword()),
+                false);
 
         Set<String> strRoles = signupRequest.getRole();
         Set<AccountRole> roles = new HashSet<>();
@@ -105,7 +120,9 @@ public class AuthManager {
         }
 
         account.setRoles(roles);
-        accountService.createUser(account);
+        AccountDto savedAccount = accountService.createUser(account);
+        RegisterConfirmationVo registerConfirmationVo = accountConvertor.convert(savedAccount);
+        accountConfirmationService.initializeConfirmation(registerConfirmationVo);
         return new BaseResponse();
     }
 
@@ -126,5 +143,18 @@ public class AuthManager {
         tokenRefreshResponse.setTokenRefreshPlainDto(tokenRefreshPlainDto);
         log.info("Refresh token process has ended, accountId : {}", account.getAccountId());
         return tokenRefreshResponse;
+    }
+
+    public BaseResponse confirmAccountEmail(UUID token) {
+        log.info("Confirm account email has started. token : {}", token);
+        AccountConfirmationToken confirmToken = accountConfirmationService.retrieveConfirmationToken(token);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiryDate = confirmToken.getExpiryDate();
+        if (expiryDate.isBefore(now)) {
+            throw new BusinessException("Expired account confirmation token.");
+        } else {
+            accountService.confirmAccountEmail(confirmToken.getAccount());
+        }
+        return new BaseResponse();
     }
 }

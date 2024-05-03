@@ -18,13 +18,13 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    @Value("${yayla.app.jwtSecret}")
+    @Value("${secondhand.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${yayla.app.jwtExpirationMs}")
+    @Value("${secondhand.app.jwtExpirationMs}")
     private String jwtExpirationMs;
 
-    @Value("${yayla.app.jwtRefreshExpirationMs}")
+    @Value("${secondhand.app.jwtRefreshExpirationMs}")
     private String refreshTokenExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {

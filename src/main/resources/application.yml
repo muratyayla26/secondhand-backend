@@ -17,15 +17,33 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/changelog-master.xml
+  mail:
+    host: smtp.resend.com
+    port: 587
+    username: resend
+    password: ${RESEND_MAIL_KEY}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+            required: true
 
 server:
   port: 8080
 
-yayla:
+secondhand:
   app:
     jwtSecret: ======================BezKoder=Spring===========================
     jwtExpirationMs: 3600000
     jwtRefreshExpirationMs: 86400000
+    mailValidityHours: 10
+    feUrl: http://localhost:8080
+    mailFromAddress: noreply@swarmer.live
     #jwtExpirationMs: 120000
     #jwtRefreshExpirationMs: 240000
 

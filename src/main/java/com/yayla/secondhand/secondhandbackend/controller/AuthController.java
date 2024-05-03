@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 @RequiredArgsConstructor
@@ -35,6 +37,12 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public TokenRefreshResponse refreshToken(@Valid @RequestBody TokenRefreshRequest request) {
         return authManager.refreshToken(request);
+    }
+
+    @GetMapping("/signup-confirm")
+    @ResponseStatus(HttpStatus.OK)
+    public BaseResponse registerConfirm(@RequestParam("token") UUID token) {
+        return authManager.confirmAccountEmail(token);
     }
 
 }
