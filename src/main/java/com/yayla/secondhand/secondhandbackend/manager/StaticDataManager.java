@@ -1,9 +1,9 @@
 package com.yayla.secondhand.secondhandbackend.manager;
 
-import com.yayla.secondhand.secondhandbackend.model.dto.CityDto;
-import com.yayla.secondhand.secondhandbackend.model.dto.DistrictDto;
-import com.yayla.secondhand.secondhandbackend.model.response.CityResponse;
-import com.yayla.secondhand.secondhandbackend.model.response.DistrictResponse;
+import com.yayla.secondhand.secondhandbackend.model.dto.staticData.CityDto;
+import com.yayla.secondhand.secondhandbackend.model.dto.staticData.DistrictDto;
+import com.yayla.secondhand.secondhandbackend.model.response.staticData.CityResponse;
+import com.yayla.secondhand.secondhandbackend.model.response.staticData.DistrictResponse;
 import com.yayla.secondhand.secondhandbackend.service.StaticDataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

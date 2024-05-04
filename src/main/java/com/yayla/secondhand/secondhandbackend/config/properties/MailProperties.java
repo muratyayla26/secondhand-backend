@@ -15,4 +15,6 @@ public class MailProperties {
     private String feUrl;
     @Value("${secondhand.app.mailFromAddress}")
     private String mailFromAddress;
+    @Value("${secondhand.app.mailValidityMinutes}")
+    private int validityInMinutes;
 }

@@ -55,7 +55,10 @@ public class AuthManager {
 
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
         log.info("Login process has started, account email : {}", loginRequest.getEmail());
-        // TODO confirmation check
+        AccountDto waitingAccount = accountService.findUserWaitsEmailConfirmation(loginRequest.getEmail());
+        if (waitingAccount != null) {
+            throw new BusinessException("Confirmation email is sent. Please try again after confirmation.");
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

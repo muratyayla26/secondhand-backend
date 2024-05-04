@@ -22,7 +22,7 @@ public class SignupRequest {
     @Email
     private String email;
 
-    // TODO max length 3
+    @Size(max = 3)
     private Set<String> role;
 
     @NotBlank

@@ -3,17 +3,21 @@ package com.yayla.secondhand.secondhandbackend.manager;
 import com.yayla.secondhand.secondhandbackend.convertor.product.ProductConvertor;
 import com.yayla.secondhand.secondhandbackend.convertor.product.ProductMediaConvertor;
 import com.yayla.secondhand.secondhandbackend.exception.BusinessException;
-import com.yayla.secondhand.secondhandbackend.model.dto.ProductDto;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductCreateRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductImagesDeleteRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductUpdateRequest;
+import com.yayla.secondhand.secondhandbackend.model.dto.product.ProductDto;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductCreateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductImagesDeleteRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductUpdateRequest;
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProductResponse;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProductCreateVo;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProductImageVo;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProductImagesDeleteVo;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProductUpdateVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.product.ProductCreateVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.product.ProductImageVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.product.ProductImagesDeleteVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.product.ProductUpdateVo;
 import com.yayla.secondhand.secondhandbackend.service.*;
+import com.yayla.secondhand.secondhandbackend.service.comment.CommentAnswerService;
+import com.yayla.secondhand.secondhandbackend.service.comment.CommentService;
+import com.yayla.secondhand.secondhandbackend.service.product.ProductMediaService;
+import com.yayla.secondhand.secondhandbackend.service.product.ProductService;
 import com.yayla.secondhand.secondhandbackend.system.utility.MediaHelper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -102,7 +106,7 @@ public class ProductManager {
         invalidImages.addAll(unloadedImages);
         BaseResponse baseResponse = new BaseResponse();
         if (!invalidImages.isEmpty()) {
-            baseResponse.setErrorMessage(String.join(", ", invalidImages));
+            baseResponse.setStatusMessage(String.join(", ", invalidImages));
         }
         return baseResponse;
     }

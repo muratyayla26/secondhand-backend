@@ -1,12 +1,12 @@
 package com.yayla.secondhand.secondhandbackend.convertor.profile;
 
-import com.yayla.secondhand.secondhandbackend.model.dto.ProfileDto;
-import com.yayla.secondhand.secondhandbackend.model.entity.Profile;
-import com.yayla.secondhand.secondhandbackend.model.request.ProfileCreateRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.ProfileUpdateRequest;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProfileCreateVo;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProfileImageVo;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProfileUpdateVo;
+import com.yayla.secondhand.secondhandbackend.model.dto.profile.ProfileDto;
+import com.yayla.secondhand.secondhandbackend.model.entity.profile.Profile;
+import com.yayla.secondhand.secondhandbackend.model.request.profile.ProfileCreateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.profile.ProfileUpdateRequest;
+import com.yayla.secondhand.secondhandbackend.model.vo.profile.ProfileCreateVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.profile.ProfileImageVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.profile.ProfileUpdateVo;
 import org.mapstruct.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,9 +1,9 @@
 package com.yayla.secondhand.secondhandbackend.controller;
 
 import com.yayla.secondhand.secondhandbackend.manager.StaticDataManager;
-import com.yayla.secondhand.secondhandbackend.model.response.CityResponse;
+import com.yayla.secondhand.secondhandbackend.model.response.staticData.CityResponse;
 
-import com.yayla.secondhand.secondhandbackend.model.response.DistrictResponse;
+import com.yayla.secondhand.secondhandbackend.model.response.staticData.DistrictResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

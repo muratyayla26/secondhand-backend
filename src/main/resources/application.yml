@@ -41,11 +41,9 @@ secondhand:
     jwtSecret: ======================BezKoder=Spring===========================
     jwtExpirationMs: 3600000
     jwtRefreshExpirationMs: 86400000
-    mailValidityHours: 10
+    mailValidityMinutes: 30
     feUrl: http://localhost:8080
     mailFromAddress: noreply@swarmer.live
-    #jwtExpirationMs: 120000
-    #jwtRefreshExpirationMs: 240000
 
 aws:
   access:

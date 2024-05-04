@@ -1,9 +1,9 @@
 package com.yayla.secondhand.secondhandbackend.controller;
 
 import com.yayla.secondhand.secondhandbackend.manager.ProductManager;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductCreateRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductImagesDeleteRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductUpdateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductCreateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductImagesDeleteRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductUpdateRequest;
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProductResponse;
 import jakarta.validation.Valid;
@@ -48,7 +48,7 @@ public class ProductController {
     @PostMapping("/upload-images/{productId}")
     public ResponseEntity<BaseResponse> uploadProductImages(@PathVariable Long productId, @RequestParam("files") MultipartFile[] files) {
         BaseResponse baseResponse = productManager.uploadProductImages(productId, files);
-        if (baseResponse.getErrorMessage() != null && !baseResponse.getErrorMessage().isEmpty()) {
+        if (baseResponse.getStatusMessage() != null && !baseResponse.getStatusMessage().isEmpty()) {
             return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(baseResponse);
         } else {
             return ResponseEntity.status(HttpStatus.CREATED).body(baseResponse);

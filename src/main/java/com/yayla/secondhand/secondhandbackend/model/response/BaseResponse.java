@@ -12,6 +12,6 @@ import lombok.*;
 public class BaseResponse {
 
     private ResponseStatusType responseStatusType = ResponseStatusType.SUCCESS;
-    private String errorMessage;
+    private String statusMessage;
     private long systemTime = System.currentTimeMillis();
 }

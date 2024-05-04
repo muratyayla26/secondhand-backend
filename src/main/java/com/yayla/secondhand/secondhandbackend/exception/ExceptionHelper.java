@@ -20,10 +20,10 @@ public class ExceptionHelper {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(baseResponse);
     }
 
-    public BaseResponse createErrorResponse(String errorMessage) {
+    public BaseResponse createErrorResponse(String statusMessage) {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setResponseStatusType(ResponseStatusType.FAILURE);
-        baseResponse.setErrorMessage(errorMessage);
+        baseResponse.setStatusMessage(statusMessage);
         return baseResponse;
     }
 }

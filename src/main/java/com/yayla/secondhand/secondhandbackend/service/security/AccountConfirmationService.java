@@ -1,5 +1,6 @@
 package com.yayla.secondhand.secondhandbackend.service.security;
 
+import com.yayla.secondhand.secondhandbackend.config.properties.MailProperties;
 import com.yayla.secondhand.secondhandbackend.exception.NotFoundException;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountConfirmationToken;
 import com.yayla.secondhand.secondhandbackend.model.vo.auth.RegisterConfirmationVo;
@@ -7,7 +8,6 @@ import com.yayla.secondhand.secondhandbackend.repository.security.AccountMailCon
 import com.yayla.secondhand.secondhandbackend.service.mail.AccountMailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,10 +20,7 @@ public class AccountConfirmationService {
 
     private final AccountMailConfirmationRepository accountMailConfirmationRepository;
     private final AccountMailService accountMailService;
-    // TODO minutes later
-    // TODO project folder structure
-    @Value("${secondhand.app.mailValidityHours}")
-    private int validityInHours;
+    private final MailProperties mailProperties;
 
     public void initializeConfirmation(RegisterConfirmationVo registerConfirmationVo) {
         log.info("Register confirmation process has been started. accountId: {}", registerConfirmationVo.getAccountId());
@@ -36,7 +33,7 @@ public class AccountConfirmationService {
         AccountConfirmationToken accountConfirmationToken = new AccountConfirmationToken();
         accountConfirmationToken.setAccountId(registerConfirmationVo.getAccountId());
         accountConfirmationToken.setToken(UUID.randomUUID());
-        accountConfirmationToken.setExpiryDate(LocalDateTime.now().plusMinutes(validityInHours));
+        accountConfirmationToken.setExpiryDate(LocalDateTime.now().plusMinutes(mailProperties.getValidityInMinutes()));
         return accountMailConfirmationRepository.save(accountConfirmationToken);
     }
 

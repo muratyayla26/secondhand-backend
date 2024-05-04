@@ -1,9 +1,9 @@
 package com.yayla.secondhand.secondhandbackend.convertor.product;
 
-import com.yayla.secondhand.secondhandbackend.model.entity.ProductMedia;
-import com.yayla.secondhand.secondhandbackend.model.request.ProductImagesDeleteRequest;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProductImageVo;
-import com.yayla.secondhand.secondhandbackend.model.vo.ProductImagesDeleteVo;
+import com.yayla.secondhand.secondhandbackend.model.entity.product.ProductMedia;
+import com.yayla.secondhand.secondhandbackend.model.request.product.ProductImagesDeleteRequest;
+import com.yayla.secondhand.secondhandbackend.model.vo.product.ProductImageVo;
+import com.yayla.secondhand.secondhandbackend.model.vo.product.ProductImagesDeleteVo;
 import org.springframework.stereotype.Component;
 
 @Component

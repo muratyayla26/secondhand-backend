@@ -1,8 +1,8 @@
 package com.yayla.secondhand.secondhandbackend.controller;
 
 import com.yayla.secondhand.secondhandbackend.manager.ProfileManager;
-import com.yayla.secondhand.secondhandbackend.model.request.ProfileCreateRequest;
-import com.yayla.secondhand.secondhandbackend.model.request.ProfileUpdateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.profile.ProfileCreateRequest;
+import com.yayla.secondhand.secondhandbackend.model.request.profile.ProfileUpdateRequest;
 import com.yayla.secondhand.secondhandbackend.model.response.BaseResponse;
 import com.yayla.secondhand.secondhandbackend.model.response.ProfileResponse;
 import jakarta.validation.Valid;

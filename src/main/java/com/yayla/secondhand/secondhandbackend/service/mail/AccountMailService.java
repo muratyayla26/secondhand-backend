@@ -19,7 +19,6 @@ public class AccountMailService {
             mailService.sendRegisterConfirmationMail(to, accountConfirmationToken.getToken());
         } catch (Exception e) {
             log.error("Failed to send confirmation mail", e);
-            // TODO whether throw error or not ji does not throw
             throw new BusinessException("Failed to send confirmation mail");
         }
     }
