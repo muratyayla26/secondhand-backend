@@ -42,7 +42,7 @@ public class AuthController {
     @GetMapping("/signup-confirm")
     @ResponseStatus(HttpStatus.OK)
     public BaseResponse registerConfirm(@RequestParam("token") UUID token) {
-        return authManager.confirmAccountEmail(token);
+        return authManager.confirmUserEmail(token);
     }
 
 }

@@ -13,7 +13,6 @@ public class AccountMailService {
 
     private final MailService mailService;
 
-    // TODO Async slow
     public void sendRegisterConfirmationMail(AccountConfirmationToken accountConfirmationToken, String to) {
         try {
             mailService.sendRegisterConfirmationMail(to, accountConfirmationToken.getToken());

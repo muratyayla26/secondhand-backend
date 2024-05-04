@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 public class SendMailVo {
     private String to;
+    private String from;
     private String subject;
     private String content;
 }

@@ -98,12 +98,6 @@ public class ProfileManager {
         return new CityAndDistrictDto(cityDto, null);
     }
 
-    private ProfileResponse mapResponse(ProfileDto profileDto) {
-        ProfileResponse profileResponse = new ProfileResponse();
-        profileResponse.setProfileDto(profileDto);
-        return profileResponse;
-    }
-
     public BaseResponse uploadProfileImage(MultipartFile file) {
         log.info("Profile image upload has started.");
         MediaHelper.validateImageType(file);
@@ -113,6 +107,12 @@ public class ProfileManager {
         ProfileImageVo profileImageVo = profileConvertor.convert(currentAccountId, file, fileKey, bucketPath);
         profileService.changeProfileImage(profileImageVo);
         return new BaseResponse();
+    }
+
+    private ProfileResponse mapResponse(ProfileDto profileDto) {
+        ProfileResponse profileResponse = new ProfileResponse();
+        profileResponse.setProfileDto(profileDto);
+        return profileResponse;
     }
 
     record CityAndDistrictDto(CityDto cityDto, DistrictDto districtDto) {

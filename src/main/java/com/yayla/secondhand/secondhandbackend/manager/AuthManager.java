@@ -11,7 +11,6 @@ import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountConfirmat
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.AccountRole;
 import com.yayla.secondhand.secondhandbackend.model.entity.auth.RefreshToken;
 import com.yayla.secondhand.secondhandbackend.model.enumtype.RoleType;
-import com.yayla.secondhand.secondhandbackend.model.request.auth.ChangePasswordRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.LoginRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.SignupRequest;
 import com.yayla.secondhand.secondhandbackend.model.request.auth.TokenRefreshRequest;
@@ -55,29 +54,17 @@ public class AuthManager {
 
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
         log.info("Login process has started, account email : {}", loginRequest.getEmail());
-        AccountDto waitingAccount = accountService.findUserWaitsEmailConfirmation(loginRequest.getEmail());
-        if (waitingAccount != null) {
-            throw new BusinessException("Confirmation email is sent. Please try again after confirmation.");
-        }
+        this.validatePendingEmailConformation(loginRequest.getEmail());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String accessToken = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
         TokenRefreshDto tokenRefreshDto = refreshTokenService.createRefreshToken(userDetails.getAccountId());
+        LoginDto loginDto = this.buildLoginDto(accessToken, tokenRefreshDto, userDetails);
 
-        LoginDto loginDto = LoginDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(tokenRefreshDto.getToken())
-                .tokenType(BEARER_PREFIX)
-                .accountId(userDetails.getAccountId())
-                .username(userDetails.getUsername())
-                .email(userDetails.getEmail())
-                .roles(roles).build();
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setLoginDto(loginDto);
         log.info("Login process has ended, account email : {}", loginRequest.getEmail());
@@ -86,46 +73,15 @@ public class AuthManager {
 
     public BaseResponse registerUser(SignupRequest signupRequest) {
         log.info("Register process has started, account email : {}", signupRequest.getEmail());
-        if (accountService.checkUserExists(signupRequest.getEmail())) {
-            throw new BusinessException("User already exists with this email address.");
-        }
+        this.validateUserDoesNotExist(signupRequest.getEmail());
 
         AccountDto waitingAccount = accountService.findUserWaitsEmailConfirmation(signupRequest.getEmail());
         if (waitingAccount != null) {
-            RegisterConfirmationVo registerConfirmationVo = accountConvertor.convert(waitingAccount);
-            accountConfirmationService.initializeConfirmation(registerConfirmationVo);
-            return new BaseResponse();
-        }
-
-        Account account = new Account(signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()),
-                false);
-
-        Set<String> strRoles = signupRequest.getRole();
-        Set<AccountRole> roles = new HashSet<>();
-
-        if (strRoles == null || strRoles.isEmpty()) {
-            roles.add(accountRoleService.retrieve(RoleType.ROLE_USER));
+            this.initializeConfirmation(waitingAccount);
         } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        roles.add(accountRoleService.retrieve(RoleType.ROLE_ADMIN));
-                        break;
-                    case "mod":
-                        roles.add(accountRoleService.retrieve(RoleType.ROLE_MODERATOR));
-                        break;
-                    default:
-                        roles.add(accountRoleService.retrieve(RoleType.ROLE_USER));
-                }
-            });
+            this.createUserAndInitializeConfirmation(signupRequest);
         }
 
-        account.setRoles(roles);
-        AccountDto savedAccount = accountService.createUser(account);
-        RegisterConfirmationVo registerConfirmationVo = accountConvertor.convert(savedAccount);
-        accountConfirmationService.initializeConfirmation(registerConfirmationVo);
         return new BaseResponse();
     }
 
@@ -134,21 +90,19 @@ public class AuthManager {
         String requestRefreshToken = request.getRefreshToken();
         RefreshToken refreshToken = refreshTokenService.retrieve(requestRefreshToken);
         refreshToken = refreshTokenService.verifyExpiration(refreshToken);
+
         Account account = refreshToken.getAccount();
         String accessToken = jwtUtils.generateJwtToken(account.getEmail());
         TokenRefreshDto newRefreshToken = refreshTokenService.createRefreshTokenAndRevoke(account.getAccountId(), refreshToken);
 
-        TokenRefreshPlainDto tokenRefreshPlainDto = TokenRefreshPlainDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(newRefreshToken.getToken())
-                .tokenType(BEARER_PREFIX).build();
+        TokenRefreshPlainDto tokenRefreshPlainDto = this.buildTokenRefreshPlainDto(accessToken, newRefreshToken.getToken());
         TokenRefreshResponse tokenRefreshResponse = new TokenRefreshResponse();
         tokenRefreshResponse.setTokenRefreshPlainDto(tokenRefreshPlainDto);
         log.info("Refresh token process has ended, accountId : {}", account.getAccountId());
         return tokenRefreshResponse;
     }
 
-    public BaseResponse confirmAccountEmail(UUID token) {
+    public BaseResponse confirmUserEmail(UUID token) {
         log.info("Confirm account email has started. token : {}", token);
         AccountConfirmationToken confirmToken = accountConfirmationService.retrieveConfirmationToken(token);
         LocalDateTime now = LocalDateTime.now();
@@ -159,5 +113,66 @@ public class AuthManager {
             accountService.confirmAccountEmail(confirmToken.getAccount());
         }
         return new BaseResponse();
+    }
+
+    private void validatePendingEmailConformation(String email) {
+        AccountDto waitingAccount = accountService.findUserWaitsEmailConfirmation(email);
+        if (waitingAccount != null) {
+            throw new BusinessException("Confirmation email is sent. Please try again after confirmation.");
+        }
+    }
+
+    private LoginDto buildLoginDto(String accessToken, TokenRefreshDto tokenRefreshDto, UserDetailsImpl userDetails) {
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        return LoginDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(tokenRefreshDto.getToken())
+                .tokenType(BEARER_PREFIX)
+                .accountId(userDetails.getAccountId())
+                .username(userDetails.getUsername())
+                .email(userDetails.getEmail())
+                .roles(roles).build();
+    }
+
+    private void validateUserDoesNotExist(String email) {
+        if (accountService.checkUserExists(email)) {
+            throw new BusinessException("User already exists with this email address.");
+        }
+    }
+
+    private void initializeConfirmation(AccountDto accountDto) {
+        RegisterConfirmationVo registerConfirmationVo = accountConvertor.convert(accountDto);
+        accountConfirmationService.initializeConfirmation(registerConfirmationVo);
+    }
+
+    private void createUserAndInitializeConfirmation(SignupRequest signupRequest) {
+        Account account = new Account(signupRequest.getUsername(),
+                signupRequest.getEmail(),
+                passwordEncoder.encode(signupRequest.getPassword()),
+                false);
+
+        Set<String> strRoles = signupRequest.getRoles();
+        Set<AccountRole> roles = strRoles.stream()
+                .map(role -> switch (role) {
+                    case "admin" -> accountRoleService.retrieve(RoleType.ROLE_ADMIN);
+                    case "mod" -> accountRoleService.retrieve(RoleType.ROLE_MODERATOR);
+                    default -> accountRoleService.retrieve(RoleType.ROLE_USER);
+                })
+                .collect(Collectors.toSet());
+        account.setRoles(roles);
+
+        AccountDto savedAccount = accountService.createUser(account);
+        RegisterConfirmationVo registerConfirmationVo = accountConvertor.convert(savedAccount);
+        accountConfirmationService.initializeConfirmation(registerConfirmationVo);
+    }
+
+    private TokenRefreshPlainDto buildTokenRefreshPlainDto(String accessToken, String refreshToken) {
+        return TokenRefreshPlainDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .tokenType(BEARER_PREFIX).build();
     }
 }

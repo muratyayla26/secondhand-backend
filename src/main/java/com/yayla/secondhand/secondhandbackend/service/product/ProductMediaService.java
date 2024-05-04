@@ -67,7 +67,6 @@ public class ProductMediaService {
         }
     }
 
-    // TODO Async future
     private void deleteProductImageIfExists(UUID currImageKey) {
         if (currImageKey != null) {
             log.info("Product image deletion has been started. currImageKey: {}", currImageKey);

@@ -80,12 +80,8 @@ public class ProductManager {
     }
 
     public BaseResponse uploadProductImages(Long productId, MultipartFile[] files) {
-        if (files == null || files.length == 0) {
-            throw new BusinessException("File is null or empty");
-        }
         log.info("Product's image upload has started. productId : {}", productId);
-        Long currentAccountId = sessionInfoService.currentAccountId();
-        validateAccess(productId, currentAccountId);
+        this.validateFilesAndAccess(files, productId);
 
         List<String> invalidImages = new ArrayList<>();
         List<ProductImageVo> productImageVos = new ArrayList<>();
@@ -104,6 +100,7 @@ public class ProductManager {
         }
         List<String> unloadedImages = productMediaService.uploadProductImages(productId, productImageVos);
         invalidImages.addAll(unloadedImages);
+
         BaseResponse baseResponse = new BaseResponse();
         if (!invalidImages.isEmpty()) {
             baseResponse.setStatusMessage(String.join(", ", invalidImages));
@@ -120,12 +117,6 @@ public class ProductManager {
         return new BaseResponse();
     }
 
-    private ProductResponse mapResponse(ProductDto productDto) {
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setProductDto(productDto);
-        return productResponse;
-    }
-
     private void validateAccess(Long productId, Long currentAccountId) {
         ProductDto productDto = productService.fetchProduct(productId);
         if (!productDto.getOwnerId().equals(currentAccountId)) {
@@ -133,5 +124,17 @@ public class ProductManager {
         }
     }
 
+    private void validateFilesAndAccess(MultipartFile[] files, Long productId) {
+        if (files == null || files.length == 0) {
+            throw new BusinessException("File is null or empty");
+        }
+        Long currentAccountId = sessionInfoService.currentAccountId();
+        validateAccess(productId, currentAccountId);
+    }
 
+    private ProductResponse mapResponse(ProductDto productDto) {
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setProductDto(productDto);
+        return productResponse;
+    }
 }

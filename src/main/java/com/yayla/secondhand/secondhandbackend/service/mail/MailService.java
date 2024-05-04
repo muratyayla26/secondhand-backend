@@ -33,7 +33,7 @@ public class MailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         mimeMessageHelper.setTo(sendMailVo.getTo());
-        mimeMessageHelper.setFrom(mailProperties.getMailFromAddress());
+        mimeMessageHelper.setFrom(sendMailVo.getFrom());
         mimeMessageHelper.setSubject(sendMailVo.getSubject());
         mimeMessageHelper.setText(sendMailVo.getContent(), true);
         mailSender.send(mimeMessage);
@@ -48,6 +48,7 @@ public class MailService {
         htmlBody = htmlBody.replaceAll(Pattern.quote("${confirmLink}"), confirmationLink);
         SendMailVo sendMailVo = SendMailVo.builder()
                 .to(to)
+                .from(mailProperties.getMailFromAddress())
                 .subject(subject)
                 .content(htmlBody).build();
         this.sendMail(sendMailVo);
