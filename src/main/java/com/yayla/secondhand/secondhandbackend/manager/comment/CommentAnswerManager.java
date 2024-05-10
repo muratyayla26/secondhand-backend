@@ -27,6 +27,7 @@ public class CommentAnswerManager {
     public BaseResponse createCommentAnswer(CommentAnswerCreateRequest commentAnswerCreateRequest) {
         log.info("Comment answer creation has started : {}", commentAnswerCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
+        sessionInfoService.validateProfileExists(currentAccountId);
         CommentDto commentDto = commentService.fetchComment(commentAnswerCreateRequest.getCommentId());
         CommentAnswerCreateVo commentCreateVo = commentAnswerConvertor.convert(commentAnswerCreateRequest, currentAccountId, commentDto.getProductId());
         commentAnswerService.createCommentAnswer(commentCreateVo);

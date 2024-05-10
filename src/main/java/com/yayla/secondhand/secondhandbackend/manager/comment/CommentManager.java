@@ -28,6 +28,7 @@ public class CommentManager {
     public BaseResponse createComment(CommentCreateRequest commentCreateRequest) {
         log.info("Comment creation has started : {}", commentCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
+        sessionInfoService.validateProfileExists(currentAccountId);
         CommentCreateVo commentCreateVo = commentConvertor.convert(commentCreateRequest, currentAccountId);
         commentService.createComment(commentCreateVo);
         return new BaseResponse();

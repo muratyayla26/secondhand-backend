@@ -52,6 +52,7 @@ public class ProductManager {
     public BaseResponse createProduct(ProductCreateRequest productCreateRequest) {
         log.info("Product creation has started. productCreateRequest : {}", productCreateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
+        sessionInfoService.validateProfileExists(currentAccountId);
         ProductCreateVo productCreateVo = productConvertor.convert(productCreateRequest, currentAccountId);
         productService.createProduct(productCreateVo);
         return new BaseResponse();

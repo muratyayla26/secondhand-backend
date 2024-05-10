@@ -37,10 +37,6 @@ public class ProfileManager {
 
     public ProfileResponse fetchProfile() {
         Long currentAccountId = sessionInfoService.currentAccountId();
-        if (!profileService.checkProfileExists(currentAccountId)) {
-            throw new BusinessException("Profile does not exists");
-        }
-
         ProfileDto profileDto = profileService.fetchProfile(currentAccountId);
         return mapResponse(profileDto);
     }

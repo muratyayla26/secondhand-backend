@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SessionInfoService {
 
+    private final ProfileService profileService;
+
     public Long currentAccountId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -26,6 +28,12 @@ public class SessionInfoService {
             return userDetails.getAccountId();
         } else {
             throw new BusinessException("Unexpected principal type. Cannot retrieve account ID.");
+        }
+    }
+
+    public void validateProfileExists(Long accountId) {
+        if (!profileService.checkProfileExists(accountId)) {
+            throw new BusinessException("Profile does not exist. First, user should create a new profile.");
         }
     }
 }

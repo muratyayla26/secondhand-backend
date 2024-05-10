@@ -28,11 +28,11 @@ public class ProfileService {
     private final S3Service s3Service;
 
     public Boolean checkProfileExists(Long accountId) {
-        return profileRepository.existsByAccountId(accountId);
+        return profileRepository.existsByAccountIdAndIsDeletedIsFalse(accountId);
     }
 
     public ProfileDto fetchProfile(Long accountId) {
-        return profileRepository.findByAccountId(accountId).map(profileConvertor::convert).orElseThrow(NotFoundException::new);
+        return profileRepository.findByAccountIdAndIsDeletedIsFalse(accountId).map(profileConvertor::convert).orElseThrow(NotFoundException::new);
     }
 
     public void createProfile(ProfileCreateVo profileCreateVo) {
@@ -44,7 +44,7 @@ public class ProfileService {
 
     public ProfileDto updateProfile(ProfileUpdateVo profileUpdateVo) {
         log.info("Profile update has started. profileUpdateVo: {}", profileUpdateVo.toString());
-        Profile profile = profileRepository.findByAccountId(profileUpdateVo.getAccountId()).orElseThrow(NotFoundException::new);
+        Profile profile = profileRepository.findByAccountIdAndIsDeletedIsFalse(profileUpdateVo.getAccountId()).orElseThrow(NotFoundException::new);
         updateValues(profile, profileUpdateVo);
         Profile saved = profileRepository.save(profile);
         log.info("Profile update has ended. saved.getProfileId: {}", saved.getProfileId());
@@ -54,7 +54,7 @@ public class ProfileService {
     @Transactional
     public void changeProfileImage(ProfileImageVo profileImageVo) {
         log.info("Profile image upload has started. profileImageVo: {}", profileImageVo.toString());
-        Profile profile = profileRepository.findByAccountId(profileImageVo.getAccountId()).orElseThrow(NotFoundException::new);
+        Profile profile = profileRepository.findByAccountIdAndIsDeletedIsFalse(profileImageVo.getAccountId()).orElseThrow(NotFoundException::new);
         UUID currImageKey = profile.getProfileImageKey();
         try {
             s3Service.uploadFile(profileImageVo.getFile(), profileImageVo.getBucketPath());

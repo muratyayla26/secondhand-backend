@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ProfileRepository extends JpaRepository<Profile, Long> {
 
-    Boolean existsByAccountId(Long accountId);
+    Boolean existsByAccountIdAndIsDeletedIsFalse(Long accountId);
 
-    Optional<Profile> findByAccountId(Long accountId);
+    Optional<Profile> findByAccountIdAndIsDeletedIsFalse(Long accountId);
 }

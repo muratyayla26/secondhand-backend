@@ -21,7 +21,7 @@ public class S3Service {
 
     private final S3Properties s3Properties;
 
-    // @Async Q: TODO file uploading usually takes time for other apps. Is it correct to use async here
+    // @Async Q: TODO file uploading usually takes time. check async here
     public void uploadFile(MultipartFile file, String keyName) throws IOException {
         PutObjectResult result = s3Client.putObject(s3Properties.getBucketName(), keyName, file.getInputStream(), null);
         log.info("Upload file successfully : {}", result.getMetadata());
@@ -31,7 +31,7 @@ public class S3Service {
         return s3Client.getObject(s3Properties.getBucketName(), keyName);
     }
 
-    @Async // Q: TODO Callers have for loops in product services, how thread management?
+    @Async // Q: TODO Callers have for loops in product services, check thread management
     public void deleteFile(String keyName) {
         s3Client.deleteObject(s3Properties.getBucketName(), keyName);
     }

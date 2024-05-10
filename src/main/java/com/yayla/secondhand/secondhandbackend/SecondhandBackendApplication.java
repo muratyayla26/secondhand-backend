@@ -14,4 +14,4 @@ public class SecondhandBackendApplication {
 
 }
 
-// Q: TODO how handled Ji mailService sendMail errors?
+// Q: TODO handle Ji mailService sendMail errors

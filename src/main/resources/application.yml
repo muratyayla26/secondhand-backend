@@ -3,8 +3,8 @@ spring:
     name: secondhand-backend
   datasource:
     url: "jdbc:postgresql://localhost:5432/secondhand_db"
-    username: "root"
-    password: "root"
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none
@@ -38,7 +38,7 @@ server:
 
 secondhand:
   app:
-    jwtSecret: ======================BezKoder=Spring===========================
+    jwtSecret: ${JWT_SECRET}
     jwtExpirationMs: 3600000
     jwtRefreshExpirationMs: 86400000
     mailValidityMinutes: 30
