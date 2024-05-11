@@ -33,6 +33,7 @@ public class ProductController {
         return productManager.createProduct(productCreateRequest);
     }
 
+    // TODO fix product id to path variable
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public ProductResponse updateProduct(@Valid @RequestBody ProductUpdateRequest productUpdateRequest) {

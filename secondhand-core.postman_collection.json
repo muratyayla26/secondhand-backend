@@ -1,0 +1,2810 @@
+{
+	"info": {
+		"_postman_id": "ecc03e58-d8b5-4d52-b119-d577a95a2608",
+		"name": "secondhand-core",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14041046"
+	},
+	"item": [
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "get-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/product/17",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"17"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-product",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/46",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"46"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:37:42 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715431062024,\n    \"data\": {\n        \"createdAt\": \"2024-05-11T15:27:25\",\n        \"updatedAt\": \"2024-05-11T15:32:19\",\n        \"productId\": 46,\n        \"title\": \"sample product title update\",\n        \"description\": \"sample product description\",\n        \"productType\": 6,\n        \"comments\": [\n            {\n                \"createdAt\": \"2024-05-11T15:35:29\",\n                \"updatedAt\": null,\n                \"commentId\": 29,\n                \"content\": \"sample comment\",\n                \"productId\": 46,\n                \"commentAnswers\": [\n                    {\n                        \"createdAt\": \"2024-05-11T15:35:57\",\n                        \"updatedAt\": null,\n                        \"commentAnswerId\": 26,\n                        \"content\": \"sample comment answer\",\n                        \"commentId\": 29,\n                        \"profile\": {\n                            \"profileId\": 67,\n                            \"firstName\": \"user test\",\n                            \"lastName\": \"lastname\",\n                            \"profileImageKey\": \"b7339016-b225-4d5c-b3f6-3f157e0880c9\"\n                        }\n                    }\n                ],\n                \"profile\": {\n                    \"profileId\": 67,\n                    \"firstName\": \"user test\",\n                    \"lastName\": \"lastname\",\n                    \"profileImageKey\": \"b7339016-b225-4d5c-b3f6-3f157e0880c9\"\n                }\n            }\n        ],\n        \"profile\": {\n            \"profileId\": 67,\n            \"firstName\": \"user test\",\n            \"lastName\": \"lastname\",\n            \"profileImageKey\": \"b7339016-b225-4d5c-b3f6-3f157e0880c9\"\n        },\n        \"productMedias\": [\n            {\n                \"createdAt\": \"2024-05-11T15:34:14\",\n                \"updatedAt\": null,\n                \"mediaId\": 42,\n                \"mediaKey\": \"ef7f0d27-4728-46b2-9507-d57991d03ca8\"\n            }\n        ],\n        \"price\": 10.99,\n        \"currency\": {\n            \"currencyId\": 2,\n            \"currencyName\": \"United States Dollar\",\n            \"currencySymbol\": \"$\",\n            \"currencyCode\": \"USD\"\n        },\n        \"sold\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "create-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"product6type\",\n    \"description\" : \"desc postman\",\n    \"productType\": 6,\n    \"price\": 10.99,\n    \"currencyId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"product"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"sample product title\",\n    \"description\" : \"sample product description\",\n    \"productType\": 6,\n    \"price\": 10.99,\n    \"currencyId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:27:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715430445016\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/product/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"18"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete-product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/47",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"47"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:28:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "update-product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"productId\": 17,\n    \"title\": \"posmtna edit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"product"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 46,\n    \"title\": \"sample product title update\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:39:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715431158121,\n    \"data\": {\n        \"createdAt\": \"2024-05-11T15:27:25\",\n        \"updatedAt\": \"2024-05-11T15:32:19\",\n        \"productId\": 46,\n        \"title\": \"sample product title update\",\n        \"description\": \"sample product description\",\n        \"productType\": 6,\n        \"comments\": [\n            {\n                \"createdAt\": \"2024-05-11T15:35:29\",\n                \"updatedAt\": null,\n                \"commentId\": 29,\n                \"content\": \"sample comment\",\n                \"productId\": 46,\n                \"commentAnswers\": [\n                    {\n                        \"createdAt\": \"2024-05-11T15:35:57\",\n                        \"updatedAt\": null,\n                        \"commentAnswerId\": 26,\n                        \"content\": \"sample comment answer\",\n                        \"commentId\": 29,\n                        \"profile\": {\n                            \"profileId\": 67,\n                            \"firstName\": \"user test\",\n                            \"lastName\": \"lastname\",\n                            \"profileImageKey\": \"b7339016-b225-4d5c-b3f6-3f157e0880c9\"\n                        }\n                    }\n                ],\n                \"profile\": {\n                    \"profileId\": 67,\n                    \"firstName\": \"user test\",\n                    \"lastName\": \"lastname\",\n                    \"profileImageKey\": \"b7339016-b225-4d5c-b3f6-3f157e0880c9\"\n                }\n            }\n        ],\n        \"profile\": {\n            \"profileId\": 67,\n            \"firstName\": \"user test\",\n            \"lastName\": \"lastname\",\n            \"profileImageKey\": \"b7339016-b225-4d5c-b3f6-3f157e0880c9\"\n        },\n        \"productMedias\": [\n            {\n                \"createdAt\": \"2024-05-11T15:34:14\",\n                \"updatedAt\": null,\n                \"mediaId\": 42,\n                \"mediaKey\": \"ef7f0d27-4728-46b2-9507-d57991d03ca8\"\n            }\n        ],\n        \"price\": 10.99,\n        \"currency\": {\n            \"currencyId\": 2,\n            \"currencyName\": \"United States Dollar\",\n            \"currencySymbol\": \"$\",\n            \"currencyCode\": \"USD\"\n        },\n        \"sold\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "upload-images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/Users/muratyayla/Desktop/samples/damlalar.jpeg",
+										"/Users/muratyayla/Desktop/samples/katalog.jpeg",
+										"/Users/muratyayla/Desktop/samples/kuş.jpeg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/product/upload-images/21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"upload-images",
+								"21"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "upload-images",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "files",
+											"type": "file",
+											"src": [
+												"/Users/muratyayla/Desktop/java-projects/sample images/damlalar.jpeg",
+												"/Users/muratyayla/Desktop/java-projects/sample images/katalog.jpeg"
+											]
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/upload-images/46",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"upload-images",
+										"46"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:34:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715430853867\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"imageIds\": [3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/product/delete-images/21",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"delete-images",
+								"21"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete-images",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"imageIds\": [41]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/product/delete-images/46",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"delete-images",
+										"46"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:34:57 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "create-account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"admin38\",\n    \"email\": \"admin38@abc.com\",\n    \"password\": \"123456\",\n    \"roles\": [\"admin\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-account",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"usertest\",\n    \"email\": \"usertest@abc.com\",\n    \"password\": \"123456\",\n    \"roles\": [\"user\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/signup",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:09:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429353795\n}"
+						}
+					]
+				},
+				{
+					"name": "login-account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"admin31@abc.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login-account",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\" : \"usertest@abc.com\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:13:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429591868,\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdEBhYmMuY29tIiwiaWF0IjoxNzE1NDI5NTkxLCJleHAiOjE3MTU0MzMxOTF9.NdIN4ycVcO_J76Hi_SH9xErq2kUz9E-OPG3y2dG0e_U\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdEBhYmMuY29tIiwiaWF0IjoxNzE1NDI5NTkxLCJleHAiOjE3MTU1MTU5OTF9.WH6RaOtZeEqlkK77uXC5VCmgbqriYNOBlzNHr9lIkoQ\",\n        \"tokenType\": \"Bearer\",\n        \"accountId\": 38,\n        \"username\": \"usertest\",\n        \"email\": \"usertest@abc.com\",\n        \"roles\": [\n            \"ROLE_USER\"\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "refresh-token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjM4QGFiYy5jb20iLCJpYXQiOjE3MTQ4NTI2NDAsImV4cCI6MTcxNDkzOTA0MH0.fsNxSK4shuyagKiq34Hd4J_LzkmBdETDpUAb8Gpp_CI\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/refresh-token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "refresh-token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdEBhYmMuY29tIiwiaWF0IjoxNzE1NDI5NTkxLCJleHAiOjE3MTU1MTU5OTF9.WH6RaOtZeEqlkK77uXC5VCmgbqriYNOBlzNHr9lIkoQ\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/refresh-token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"refresh-token"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:13:37 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429617310,\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdEBhYmMuY29tIiwiaWF0IjoxNzE1NDI5NjE3LCJleHAiOjE3MTU0MzMyMTd9.eLXVPt30Rjjt1X63-BSnH4vB4nW7hnWOD5yyeIf8wew\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdEBhYmMuY29tIiwiaWF0IjoxNzE1NDI5NjE3LCJleHAiOjE3MTU1MTYwMTd9.hzpB1yP6bZiZdqJHd-kgd3hQF7DrPd-XaZxFQrLx5vo\",\n        \"tokenType\": \"Bearer\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "email-confirm",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/signup-confirm?token=67a67657-4685-45b9-832f-7a9022903f61",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup-confirm"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "67a67657-4685-45b9-832f-7a9022903f61"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "email-confirm",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/auth/signup-confirm?token=6cf789cb-87e9-47a9-8220-3b7922e6558f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"signup-confirm"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "6cf789cb-87e9-47a9-8220-3b7922e6558f"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:12:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429564599\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "profile",
+			"item": [
+				{
+					"name": "create-profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"murat11\",\n    \"lastName\": \"yayla\",\n    \"mobileNumber\": \"2223232\",\n    \"address\": \"kanal yanı\",\n    \"genderType\": 0,\n    \"cityId\": 26,\n    \"districtId\": 371\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-profile",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"user test\",\n    \"lastName\": \"lastname\",\n    \"mobileNumber\": \"123456789\",\n    \"address\": \"Broadway 10012, New York, NY, USA\",\n    \"genderType\": 0,\n    \"cityId\": 26,\n    \"districtId\": 371\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"profile"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:15:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429744136\n}"
+						}
+					]
+				},
+				{
+					"name": "get-profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:16:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429815420,\n    \"data\": {\n        \"createdAt\": \"2024-05-11T15:15:44\",\n        \"updatedAt\": \"2024-05-11T15:16:45\",\n        \"profileId\": 67,\n        \"firstName\": \"user test\",\n        \"lastName\": \"lastname\",\n        \"mobileNumber\": \"1234567899\",\n        \"address\": \"Broadway 10012, New York, NY\",\n        \"city\": null,\n        \"district\": null,\n        \"genderType\": 0,\n        \"accountId\": 38,\n        \"profileImageKey\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update-profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mobileNumber\": \"1111222333\",\n    \"address\": \"yeni adres\",\n    \"districtId\": 371\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update-profile",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mobileNumber\": \"1234567899\",\n    \"address\": \"Broadway 10012, New York, NY\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:16:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429804587,\n    \"data\": {\n        \"createdAt\": \"2024-05-11T15:15:44\",\n        \"updatedAt\": \"2024-05-11T15:16:44.583692\",\n        \"profileId\": 67,\n        \"firstName\": \"user test\",\n        \"lastName\": \"lastname\",\n        \"mobileNumber\": \"1234567899\",\n        \"address\": \"Broadway 10012, New York, NY\",\n        \"city\": null,\n        \"district\": null,\n        \"genderType\": 0,\n        \"accountId\": 38,\n        \"profileImageKey\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "upload-image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/muratyayla/Desktop/samples/kuş.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/profile/upload-image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"profile",
+								"upload-image"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "upload-image",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/Users/muratyayla/Desktop/java-projects/sample images/damlalar.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/profile/upload-image",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"profile",
+										"upload-image"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:17:42 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429862753\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "staticData",
+			"item": [
+				{
+					"name": "get-cities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"cities"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-cities",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/cities",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"cities"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:13:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429639752,\n    \"data\": [\n        {\n            \"cityId\": 1,\n            \"cityName\": \"Adana\"\n        },\n        {\n            \"cityId\": 2,\n            \"cityName\": \"Adıyaman\"\n        },\n        {\n            \"cityId\": 4,\n            \"cityName\": \"Ağrı\"\n        },\n        {\n            \"cityId\": 5,\n            \"cityName\": \"Amasya\"\n        },\n        {\n            \"cityId\": 6,\n            \"cityName\": \"Ankara\"\n        },\n        {\n            \"cityId\": 7,\n            \"cityName\": \"Antalya\"\n        },\n        {\n            \"cityId\": 8,\n            \"cityName\": \"Artvin\"\n        },\n        {\n            \"cityId\": 9,\n            \"cityName\": \"Aydın\"\n        },\n        {\n            \"cityId\": 10,\n            \"cityName\": \"Balıkesir\"\n        },\n        {\n            \"cityId\": 11,\n            \"cityName\": \"Bilecik\"\n        },\n        {\n            \"cityId\": 12,\n            \"cityName\": \"Bingöl\"\n        },\n        {\n            \"cityId\": 13,\n            \"cityName\": \"Bitlis\"\n        },\n        {\n            \"cityId\": 14,\n            \"cityName\": \"Bolu\"\n        },\n        {\n            \"cityId\": 15,\n            \"cityName\": \"Burdur\"\n        },\n        {\n            \"cityId\": 16,\n            \"cityName\": \"Bursa\"\n        },\n        {\n            \"cityId\": 17,\n            \"cityName\": \"Çanakkale\"\n        },\n        {\n            \"cityId\": 18,\n            \"cityName\": \"Çankırı\"\n        },\n        {\n            \"cityId\": 19,\n            \"cityName\": \"Çorum\"\n        },\n        {\n            \"cityId\": 20,\n            \"cityName\": \"Denizli\"\n        },\n        {\n            \"cityId\": 21,\n            \"cityName\": \"Diyarbakır\"\n        },\n        {\n            \"cityId\": 22,\n            \"cityName\": \"Edirne\"\n        },\n        {\n            \"cityId\": 23,\n            \"cityName\": \"Elazığ\"\n        },\n        {\n            \"cityId\": 24,\n            \"cityName\": \"Erzincan\"\n        },\n        {\n            \"cityId\": 25,\n            \"cityName\": \"Erzurum\"\n        },\n        {\n            \"cityId\": 26,\n            \"cityName\": \"Eskişehir\"\n        },\n        {\n            \"cityId\": 27,\n            \"cityName\": \"Gaziantep\"\n        },\n        {\n            \"cityId\": 28,\n            \"cityName\": \"Giresun\"\n        },\n        {\n            \"cityId\": 29,\n            \"cityName\": \"Gümüşhane\"\n        },\n        {\n            \"cityId\": 30,\n            \"cityName\": \"Hakkari\"\n        },\n        {\n            \"cityId\": 31,\n            \"cityName\": \"Hatay\"\n        },\n        {\n            \"cityId\": 32,\n            \"cityName\": \"Isparta\"\n        },\n        {\n            \"cityId\": 33,\n            \"cityName\": \"Mersin\"\n        },\n        {\n            \"cityId\": 34,\n            \"cityName\": \"İstanbul\"\n        },\n        {\n            \"cityId\": 35,\n            \"cityName\": \"İzmir\"\n        },\n        {\n            \"cityId\": 36,\n            \"cityName\": \"Kars\"\n        },\n        {\n            \"cityId\": 37,\n            \"cityName\": \"Kastamonu\"\n        },\n        {\n            \"cityId\": 38,\n            \"cityName\": \"Kayseri\"\n        },\n        {\n            \"cityId\": 39,\n            \"cityName\": \"Kırklareli\"\n        },\n        {\n            \"cityId\": 40,\n            \"cityName\": \"Kırşehir\"\n        },\n        {\n            \"cityId\": 41,\n            \"cityName\": \"Kocaeli\"\n        },\n        {\n            \"cityId\": 42,\n            \"cityName\": \"Konya\"\n        },\n        {\n            \"cityId\": 43,\n            \"cityName\": \"Kütahya\"\n        },\n        {\n            \"cityId\": 44,\n            \"cityName\": \"Malatya\"\n        },\n        {\n            \"cityId\": 45,\n            \"cityName\": \"Manisa\"\n        },\n        {\n            \"cityId\": 47,\n            \"cityName\": \"Mardin\"\n        },\n        {\n            \"cityId\": 48,\n            \"cityName\": \"Muğla\"\n        },\n        {\n            \"cityId\": 49,\n            \"cityName\": \"Muş\"\n        },\n        {\n            \"cityId\": 50,\n            \"cityName\": \"Nevşehir\"\n        },\n        {\n            \"cityId\": 51,\n            \"cityName\": \"Niğde\"\n        },\n        {\n            \"cityId\": 52,\n            \"cityName\": \"Ordu\"\n        },\n        {\n            \"cityId\": 53,\n            \"cityName\": \"Rize\"\n        },\n        {\n            \"cityId\": 54,\n            \"cityName\": \"Sakarya\"\n        },\n        {\n            \"cityId\": 55,\n            \"cityName\": \"Samsun\"\n        },\n        {\n            \"cityId\": 56,\n            \"cityName\": \"Siirt\"\n        },\n        {\n            \"cityId\": 57,\n            \"cityName\": \"Sinop\"\n        },\n        {\n            \"cityId\": 58,\n            \"cityName\": \"Sivas\"\n        },\n        {\n            \"cityId\": 59,\n            \"cityName\": \"Tekirdağ\"\n        },\n        {\n            \"cityId\": 60,\n            \"cityName\": \"Tokat\"\n        },\n        {\n            \"cityId\": 61,\n            \"cityName\": \"Trabzon\"\n        },\n        {\n            \"cityId\": 62,\n            \"cityName\": \"Tunceli\"\n        },\n        {\n            \"cityId\": 63,\n            \"cityName\": \"Şanlıurfa\"\n        },\n        {\n            \"cityId\": 64,\n            \"cityName\": \"Uşak\"\n        },\n        {\n            \"cityId\": 65,\n            \"cityName\": \"Van\"\n        },\n        {\n            \"cityId\": 66,\n            \"cityName\": \"Yozgat\"\n        },\n        {\n            \"cityId\": 67,\n            \"cityName\": \"Zonguldak\"\n        },\n        {\n            \"cityId\": 68,\n            \"cityName\": \"Aksaray\"\n        },\n        {\n            \"cityId\": 69,\n            \"cityName\": \"Bayburt\"\n        },\n        {\n            \"cityId\": 70,\n            \"cityName\": \"Karaman\"\n        },\n        {\n            \"cityId\": 71,\n            \"cityName\": \"Kırıkkale\"\n        },\n        {\n            \"cityId\": 72,\n            \"cityName\": \"Batman\"\n        },\n        {\n            \"cityId\": 73,\n            \"cityName\": \"Şırnak\"\n        },\n        {\n            \"cityId\": 74,\n            \"cityName\": \"Bartın\"\n        },\n        {\n            \"cityId\": 75,\n            \"cityName\": \"Ardahan\"\n        },\n        {\n            \"cityId\": 76,\n            \"cityName\": \"Iğdır\"\n        },\n        {\n            \"cityId\": 3,\n            \"cityName\": \"Afyon\"\n        },\n        {\n            \"cityId\": 77,\n            \"cityName\": \"Yalova\"\n        },\n        {\n            \"cityId\": 78,\n            \"cityName\": \"Karabük\"\n        },\n        {\n            \"cityId\": 79,\n            \"cityName\": \"Kilis\"\n        },\n        {\n            \"cityId\": 80,\n            \"cityName\": \"Osmaniye\"\n        },\n        {\n            \"cityId\": 81,\n            \"cityName\": \"Düzce\"\n        },\n        {\n            \"cityId\": 46,\n            \"cityName\": \"Kahramanmaraş\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "get-districts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/districts/03",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"districts",
+								"03"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get-districts",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/districts/26",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"districts",
+										"26"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:14:15 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429655703,\n    \"data\": [\n        {\n            \"districtId\": 371,\n            \"districtName\": \"İnönü\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 374,\n            \"districtName\": \"Mi̇halıççık\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 367,\n            \"districtName\": \"Beyli̇kova\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 373,\n            \"districtName\": \"Mi̇halgazi̇\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 377,\n            \"districtName\": \"Seyi̇tgazi̇\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 376,\n            \"districtName\": \"Sarıcakaya\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 372,\n            \"districtName\": \"Mahmudi̇ye\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 378,\n            \"districtName\": \"Si̇vri̇hi̇sar\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 370,\n            \"districtName\": \"Han\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 375,\n            \"districtName\": \"Odunpazarı\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 368,\n            \"districtName\": \"Çi̇fteler\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 369,\n            \"districtName\": \"Günyüzü\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 366,\n            \"districtName\": \"Alpu\",\n            \"cityId\": 26\n        },\n        {\n            \"districtId\": 379,\n            \"districtName\": \"Tepebaşı\",\n            \"cityId\": 26\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "create-comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"comment 777\",\n    \"productId\": 17\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"comment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-comment",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"sample comment\",\n    \"productId\": 46\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/comment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"comment"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:35:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715430929402\n}"
+						}
+					]
+				},
+				{
+					"name": "create-comment-answer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"answeer 4asddasdasda\",\n    \"commentId\": 16\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/comment-answer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"comment-answer"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "create-comment-answer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"sample comment answer\",\n    \"commentId\": 29\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/comment-answer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"comment-answer"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:35:57 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715430957481\n}"
+						}
+					]
+				},
+				{
+					"name": "delete-comment-answer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/comment-answer/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"comment-answer",
+								"22"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete-comment-answer",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/comment-answer/27",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"comment-answer",
+										"27"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:36:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "delete-comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/comment/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"comment",
+								"22"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete-comment",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/comment/30",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"comment",
+										"30"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:37:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"123456\",\n    \"newPassword\": \"12345678\",\n    \"confirmNewPassword\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/account/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"change-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "change-password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"currentPassword\": \"123456\",\n    \"newPassword\": \"12345678\",\n    \"confirmNewPassword\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/account/change-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"account",
+										"change-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:18:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"responseStatusType\": \"SUCCESS\",\n    \"statusMessage\": null,\n    \"systemTime\": 1715429921303\n}"
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{ACCESS_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Refresh-Token",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjZAYWJjLmNvbSIsImlhdCI6MTcxNDY2NjgyNSwiZXhwIjoxNzE0NzUzMjI1fQ.B1-ls12wSUb1h1b9EdU0ZoPP8sEyHU0c4-6-lJ_3UDQ",
+								"uuid": "b3d0e63a-1bf2-413d-834c-aa7ce34fcfae"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/account/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"account",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "logout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Refresh-Token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VydGVzdEBhYmMuY29tIiwiaWF0IjoxNzE1NDMwMTAxLCJleHAiOjE3MTU1MTY1MDF9.8iQ5qgUSCAIR3pYU9D39CdC9pDX_5uwZNMr7t6dJmzc"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/account/logout",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"account",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 11 May 2024 12:22:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}
