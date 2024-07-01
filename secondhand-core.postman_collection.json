@@ -389,7 +389,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"productId\": 17,\n    \"title\": \"posmtna edit\"\n}",
+							"raw": "{\n    \"title\": \"posmtna edit\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -397,7 +397,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/product",
+							"raw": "http://localhost:8080/api/v1/product/21",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -406,7 +406,8 @@
 							"path": [
 								"api",
 								"v1",
-								"product"
+								"product",
+								"21"
 							]
 						}
 					},
@@ -418,7 +419,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"productId\": 46,\n    \"title\": \"sample product title update\"\n}",
+									"raw": "{\n    \"title\": \"sample product title update\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -426,7 +427,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/product",
+									"raw": "http://localhost:8080/api/v1/product/21",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -435,7 +436,8 @@
 									"path": [
 										"api",
 										"v1",
-										"product"
+										"product",
+										"21"
 									]
 								}
 							},
@@ -2697,8 +2699,7 @@
 						"header": [
 							{
 								"key": "Refresh-Token",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjZAYWJjLmNvbSIsImlhdCI6MTcxNDY2NjgyNSwiZXhwIjoxNzE0NzUzMjI1fQ.B1-ls12wSUb1h1b9EdU0ZoPP8sEyHU0c4-6-lJ_3UDQ",
-								"uuid": "b3d0e63a-1bf2-413d-834c-aa7ce34fcfae"
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjZAYWJjLmNvbSIsImlhdCI6MTcxNDY2NjgyNSwiZXhwIjoxNzE0NzUzMjI1fQ.B1-ls12wSUb1h1b9EdU0ZoPP8sEyHU0c4-6-lJ_3UDQ"
 							}
 						],
 						"url": {

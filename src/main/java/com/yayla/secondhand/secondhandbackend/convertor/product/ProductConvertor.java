@@ -15,7 +15,7 @@ public interface ProductConvertor {
 
     ProductCreateVo convert(ProductCreateRequest productCreateRequest, Long ownerId);
 
-    ProductUpdateVo convert(ProductUpdateRequest productUpdateRequest);
+    ProductUpdateVo convert(ProductUpdateRequest productUpdateRequest, Long productId);
 
     Product convert(ProductCreateVo productCreateVo);
 }

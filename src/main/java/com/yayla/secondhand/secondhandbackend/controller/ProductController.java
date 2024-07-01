@@ -33,11 +33,10 @@ public class ProductController {
         return productManager.createProduct(productCreateRequest);
     }
 
-    // TODO fix product id to path variable
-    @PutMapping
+    @PutMapping("/{productId}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductResponse updateProduct(@Valid @RequestBody ProductUpdateRequest productUpdateRequest) {
-        return productManager.updateProduct(productUpdateRequest);
+    public ProductResponse updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductUpdateRequest productUpdateRequest) {
+        return productManager.updateProduct(productId, productUpdateRequest);
     }
 
     @DeleteMapping("/{productId}")

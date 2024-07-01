@@ -58,11 +58,11 @@ public class ProductManager {
         return new BaseResponse();
     }
 
-    public ProductResponse updateProduct(ProductUpdateRequest productUpdateRequest) {
+    public ProductResponse updateProduct(Long productId, ProductUpdateRequest productUpdateRequest) {
         log.info("Product update has started. productUpdateRequest : {}", productUpdateRequest.toString());
         Long currentAccountId = sessionInfoService.currentAccountId();
-        validateAccess(productUpdateRequest.getProductId(), currentAccountId);
-        ProductUpdateVo productUpdateVo = productConvertor.convert(productUpdateRequest);
+        validateAccess(productId, currentAccountId);
+        ProductUpdateVo productUpdateVo = productConvertor.convert(productUpdateRequest, productId);
         ProductDto productDto = productService.updateProduct(productUpdateVo);
         return mapResponse(productDto);
     }

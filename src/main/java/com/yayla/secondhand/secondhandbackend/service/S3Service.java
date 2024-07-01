@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.yayla.secondhand.secondhandbackend.config.properties.S3Properties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +20,6 @@ public class S3Service {
 
     private final S3Properties s3Properties;
 
-    // @Async Q: TODO file uploading usually takes time. check async here
     public void uploadFile(MultipartFile file, String keyName) throws IOException {
         PutObjectResult result = s3Client.putObject(s3Properties.getBucketName(), keyName, file.getInputStream(), null);
         log.info("Upload file successfully : {}", result.getMetadata());
@@ -31,7 +29,6 @@ public class S3Service {
         return s3Client.getObject(s3Properties.getBucketName(), keyName);
     }
 
-    @Async // Q: TODO Callers have for loops in product services, check thread management
     public void deleteFile(String keyName) {
         s3Client.deleteObject(s3Properties.getBucketName(), keyName);
     }

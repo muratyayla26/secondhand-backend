@@ -13,6 +13,3 @@ public class SecondhandBackendApplication {
     }
 
 }
-
-// Q: TODO handle Ji mailService sendMail errors
-// TODO DELETE request status-body conflict fix
